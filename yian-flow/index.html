@@ -3,9 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="YIAN Flow｜颐安智流，为仓库、物流、批发、工厂等企业提供 AI 与业务流程自动化服务，减少重复人工操作，提高客户响应和运营效率。">
+  <meta name="description" content="YIAN Flow｜颐安智流，为仓库、物流、批发、工厂和成长型企业提供业务流程自动化与 AI 集成服务，减少重复录入、查询、遗漏和人工报表，让现有团队处理更多业务。">
   <meta name="theme-color" content="#0a0f1f">
+  <link rel="canonical" href="https://yianflow.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="YIAN Flow｜颐安智流 — 企业流程自动化与 AI 集成">
+  <meta property="og:description" content="把订单、客户跟进、资料录入、库存通知和运营报表等重复工作交给自动化。">
+  <meta property="og:url" content="https://yianflow.com/">
   <title>YIAN Flow｜颐安智流 — 企业流程自动化与 AI 集成</title>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"YIAN Flow｜颐安智流",
+    "url":"https://yianflow.com/",
+    "email":"louisong1021@gmail.com",
+    "telephone":"+1-840-272-3800",
+    "areaServed":"United States",
+    "serviceType":["Business Process Automation","AI Integration","Workflow Automation"]
+  }
+  </script>
   <style>
     :root{
       --bg:#08101f;
@@ -131,22 +148,57 @@
     .timeline-item:before{content:"";position:absolute;left:-34px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 5px rgba(102,227,196,.09)}
     .timeline-item b{display:block;margin-bottom:5px}
     .timeline-item p{margin:0;color:var(--muted);font-size:14px}
+    .demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .demo-card{
+      border:1px solid var(--line);border-radius:20px;padding:24px;
+      background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025))
+    }
+    .demo-tag{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(102,227,196,.10);color:var(--brand);font-size:12px;font-weight:800;margin-bottom:14px}
+    .demo-card h3{font-size:20px;margin:0 0 18px}
+    .demo-stage{padding:14px 0;border-top:1px solid var(--line)}
+    .demo-stage:first-of-type{border-top:0}
+    .demo-stage small{display:block;color:var(--brand);font-weight:850;letter-spacing:.5px;margin-bottom:4px}
+    .demo-stage p{margin:0;color:var(--muted);font-size:14px}
+    .result{margin-top:16px;padding:12px 14px;border-radius:12px;background:rgba(106,167,255,.08);color:#dce8f7;font-size:13px}
+    .integration-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+    .integration-list{display:flex;flex-wrap:wrap;gap:10px}
+    .integration-list span{padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);color:#dbe5f3;font-size:13px;font-weight:700}
+    .faq{display:grid;grid-template-columns:.82fr 1.18fr;gap:44px;align-items:start}
+    .faq-list{display:grid;gap:12px}
+    details{border:1px solid var(--line);border-radius:16px;padding:0 18px;background:rgba(255,255,255,.03)}
+    summary{cursor:pointer;font-weight:800;padding:17px 0}
+    details p{color:var(--muted);font-size:14px;margin:0;padding:0 0 17px}
     .cta{
       padding:42px;border-radius:26px;border:1px solid rgba(102,227,196,.24);
       background:
         linear-gradient(135deg,rgba(102,227,196,.10),rgba(106,167,255,.10)),
         rgba(255,255,255,.025);
-      display:grid;grid-template-columns:1fr auto;gap:26px;align-items:center
+      display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:start
     }
     .cta h2{font-size:34px;margin:0 0 10px}
     .cta p{margin:0;color:var(--muted);max-width:700px}
+    .lead-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .lead-form .full{grid-column:1/-1}
+    .field{display:grid;gap:7px}
+    .field label{font-size:12px;font-weight:800;color:#cbd6e4}
+    .field input,.field textarea{
+      width:100%;border:1px solid var(--line);border-radius:12px;background:#091427;
+      color:#fff;padding:12px 13px;font:inherit;outline:none
+    }
+    .field textarea{min-height:118px;resize:vertical}
+    .field input:focus,.field textarea:focus{border-color:rgba(102,227,196,.62);box-shadow:0 0 0 3px rgba(102,227,196,.08)}
+    .form-note{grid-column:1/-1;color:var(--muted);font-size:12px;margin-top:-2px}
+    .lead-form .btn{grid-column:1/-1;cursor:pointer}
+    .mini-proof{display:grid;gap:10px;margin-top:24px}
+    .mini-proof span{color:#cbd6e4;font-size:13px}
+    .mini-proof span:before{content:"✓";color:var(--brand);font-weight:900;margin-right:8px}
     footer{padding:34px 0 46px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
     .footer-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     .contact{display:flex;gap:16px;flex-wrap:wrap}
     .contact a:hover{color:white}
     @media(max-width:900px){
-      .hero-grid,.how,.cta{grid-template-columns:1fr}
-      .pain-grid,.service-grid,.industry-grid{grid-template-columns:1fr 1fr}
+      .hero-grid,.how,.cta,.integration-grid,.faq{grid-template-columns:1fr}
+      .pain-grid,.service-grid,.industry-grid,.demo-grid{grid-template-columns:1fr 1fr}
       .workflow{grid-template-columns:1fr}
       .wf:not(:last-child):after{content:"↓";right:auto;left:50%;top:auto;bottom:-19px;transform:translateX(-50%)}
       .nav-links a:not(.btn){display:none}
@@ -154,7 +206,8 @@
     }
     @media(max-width:620px){
       .wrap{width:min(100% - 28px,var(--max))}
-      .pain-grid,.service-grid,.industry-grid{grid-template-columns:1fr}
+      .pain-grid,.service-grid,.industry-grid,.demo-grid,.lead-form{grid-template-columns:1fr}
+      .lead-form .full,.lead-form .btn,.form-note{grid-column:1}
       h1{letter-spacing:-1.4px}
       .lead{font-size:17px}
       .cta{padding:28px}
@@ -173,8 +226,9 @@
       <div class="nav-links">
         <a href="#problems">业务痛点</a>
         <a href="#solutions">解决方案</a>
+        <a href="#examples">自动化示例</a>
         <a href="#industries">适用行业</a>
-        <a href="#contact" class="btn btn-primary">免费初步评估</a>
+        <a href="#contact" class="btn btn-primary">免费流程评估</a>
       </div>
     </div>
   </nav>
@@ -185,20 +239,20 @@
         <div>
           <div class="eyebrow">企业流程自动化与 AI 集成</div>
           <h1>把每天重复做的工作，<span class="gradient">交给自动化。</span></h1>
-          <p class="lead">YIAN Flow 帮助仓库、物流、批发、工厂及成长型企业，把订单处理、客户回复、资料录入、库存更新、通知与报表等重复流程自动化，让员工把时间留给真正需要判断和沟通的工作。</p>
+          <p class="lead">YIAN Flow 帮助仓库、物流、批发、工厂及成长型企业，把订单录入、客户跟进、资料整理、库存通知和运营报表自动化。<strong style="color:#fff">少复制、少查询、少遗漏，让现有团队处理更多业务。</strong></p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:louisong1021@gmail.com?subject=YIAN%20Flow%20自动化咨询">告诉我们你最耗时间的工作</a>
-            <a class="btn btn-ghost" href="#solutions">查看可以自动化什么</a>
+            <a class="btn btn-primary" href="#contact">免费评估一个业务流程</a>
+            <a class="btn btn-ghost" href="#examples">查看自动化示例</a>
           </div>
           <div class="trust">
-            <span>围绕现有流程改造</span>
-            <span>不强制更换现有软件</span>
-            <span>先从一个高重复环节开始</span>
+            <span>不需要更换现有系统</span>
+            <span>从一个重复流程开始</span>
+            <span>先判断是否值得自动化</span>
           </div>
         </div>
 
         <div class="flow-card" aria-label="自动化流程示例">
-          <h3>一个典型的业务自动化流程</h3>
+          <h3>示例：一封订单邮件如何自动处理</h3>
           <div class="step"><div class="num">01</div><div><b>客户发来订单 / 询盘</b><span>邮件、表单、短信或现有业务系统收到新信息</span></div></div>
           <div class="step"><div class="num">02</div><div><b>自动识别与整理</b><span>提取客户、订单、产品、地址、需求等关键字段</span></div></div>
           <div class="step"><div class="num">03</div><div><b>自动写入与同步</b><span>更新表格、CRM、数据库或内部系统</span></div></div>
@@ -244,18 +298,53 @@
       </div>
     </section>
 
-    <section class="strip">
+    <section id="examples" class="strip">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">实际场景</div>
-          <h2>从“客户来消息”到“内部完成处理”，可以少很多人工步骤。</h2>
+          <div class="kicker">AUTOMATION EXAMPLES · 自动化示例</div>
+          <h2>不要先想“AI 能做什么”，先看员工每天重复做什么。</h2>
+          <p>下面是三种常见业务流程的示例。我们会根据你现有的软件和工作方式重新设计，而不是要求你照搬一套新系统。</p>
         </div>
-        <div class="workflow">
-          <div class="wf"><small>STEP 1</small><b>客户订单 / 询盘进入</b></div>
-          <div class="wf"><small>STEP 2</small><b>自动整理与分类</b></div>
-          <div class="wf"><small>STEP 3</small><b>写入系统 / 更新状态</b></div>
-          <div class="wf"><small>STEP 4</small><b>通知负责人 / 客户</b></div>
-          <div class="wf"><small>STEP 5</small><b>生成记录与报表</b></div>
+        <div class="demo-grid">
+          <article class="demo-card">
+            <div class="demo-tag">订单自动化</div>
+            <h3>从订单邮件到内部处理</h3>
+            <div class="demo-stage"><small>BEFORE</small><p>员工打开邮件，复制客户、产品、数量和地址，再录入表格或系统并通知相关人员。</p></div>
+            <div class="demo-stage"><small>AUTOMATION</small><p>系统自动读取订单 → 提取关键字段 → 写入现有表格 / CRM / 数据库 → 通知负责人。</p></div>
+            <div class="demo-stage"><small>AFTER</small><p>正常订单自动流转，员工重点处理缺失信息、异常订单和需要判断的情况。</p></div>
+            <div class="result">减少重复录入，也降低忙碌时漏单和抄错资料的风险。</div>
+          </article>
+          <article class="demo-card">
+            <div class="demo-tag">客户跟进自动化</div>
+            <h3>从客户查询到状态回复</h3>
+            <div class="demo-stage"><small>BEFORE</small><p>客户询问订单进度后，员工翻邮件、查系统、问仓库，再手工组织回复。</p></div>
+            <div class="demo-stage"><small>AUTOMATION</small><p>识别客户和订单 → 查询现有状态 → 生成或发送标准回复 → 异常情况转给人工。</p></div>
+            <div class="demo-stage"><small>AFTER</small><p>常规查询更快完成，员工把时间留给改期、异常、投诉等需要沟通的事项。</p></div>
+            <div class="result">缩短查询与回复链路，让客户状态信息更一致。</div>
+          </article>
+          <article class="demo-card">
+            <div class="demo-tag">运营报表自动化</div>
+            <h3>从分散数据到每日提醒</h3>
+            <div class="demo-stage"><small>BEFORE</small><p>每天从邮件、Excel、系统里找数据，手工统计订单、库存、异常和跟进状态。</p></div>
+            <div class="demo-stage"><small>AUTOMATION</small><p>定时汇总多个来源 → 按规则整理数据 → 生成日报 / 异常清单 → 通知负责人。</p></div>
+            <div class="demo-stage"><small>AFTER</small><p>团队直接查看需要处理的事项，不再把时间花在重复搜集和搬运数据上。</p></div>
+            <div class="result">让报表从“整理工作”变成真正用于判断和行动的信息。</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap integration-grid">
+        <div class="section-head" style="margin-bottom:0">
+          <div class="kicker">连接现有工具</div>
+          <h2>优先连接你已经在用的工具，而不是推倒重来。</h2>
+          <p>自动化的价值来自信息能够顺畅流转。具体接入方式会根据现有系统、权限和业务要求评估。</p>
+        </div>
+        <div class="integration-list" aria-label="可连接的业务工具类型">
+          <span>企业邮箱</span><span>Excel / 表格</span><span>CRM</span><span>数据库</span>
+          <span>网站 / 表单</span><span>短信通知</span><span>库存系统</span><span>内部业务系统</span>
+          <span>API</span><span>文件与报表</span>
         </div>
       </div>
     </section>
@@ -296,18 +385,44 @@
       </div>
     </section>
 
+    <section class="strip">
+      <div class="wrap faq">
+        <div class="section-head" style="margin-bottom:0">
+          <div class="kicker">FAQ</div>
+          <h2>先从一个流程判断值不值得做。</h2>
+          <p>如果你还没有完整需求，这很正常。很多自动化项目都是从“这件事每天太浪费时间”开始。</p>
+        </div>
+        <div class="faq-list">
+          <details open><summary>我们需要更换现在的软件吗？</summary><p>通常不需要。我们会优先评估现有邮箱、表格、CRM、数据库或内部系统能否继续使用，再决定需要连接、补充还是调整哪些环节。</p></details>
+          <details><summary>什么样的工作最适合先自动化？</summary><p>高频、重复、规则相对明确、需要在多个工具之间复制信息，或者一忙就容易遗漏的流程，通常最值得先评估。</p></details>
+          <details><summary>是不是所有步骤都要交给 AI？</summary><p>不是。规则明确的部分可以用普通自动化，需要理解文本的环节才考虑 AI；涉及判断、审批和异常处理的关键步骤可以保留人工。</p></details>
+          <details><summary>可以先做一个小流程吗？</summary><p>可以。我们更倾向先选一个真实、高频的问题做小范围验证，稳定后再决定是否扩展到其他流程。</p></details>
+        </div>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="wrap">
         <div class="cta">
           <div>
-            <div class="kicker">免费初步评估</div>
-            <h2>告诉我们：现在最耗时间的一项重复工作是什么？</h2>
-            <p>不用先准备完整需求。只要简单描述目前怎么做，我们先帮你判断哪些步骤值得自动化。</p>
+            <div class="kicker">免费流程评估</div>
+            <h2>你们现在最重复、最耗时间的工作是什么？</h2>
+            <p>不用先写完整需求。简单描述员工现在怎么做、在哪里最耗时间，我们先判断哪些步骤适合自动化。</p>
+            <div class="mini-proof">
+              <span>先分析现有流程，不要求先买新系统</span>
+              <span>可以只从一个重复环节开始</span>
+              <span>不适合自动化的步骤也会明确保留人工</span>
+            </div>
           </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:louisong1021@gmail.com?subject=YIAN%20Flow%20自动化咨询">发送邮件</a>
-            <a class="btn btn-ghost" href="tel:+18402723800">+1 (840) 272-3800</a>
-          </div>
+          <form class="lead-form" id="leadForm">
+            <div class="field"><label for="company">公司名称</label><input id="company" name="company" autocomplete="organization" placeholder="Company"></div>
+            <div class="field"><label for="name">联系人</label><input id="name" name="name" autocomplete="name" placeholder="Name"></div>
+            <div class="field"><label for="contactInfo">Email / Phone</label><input id="contactInfo" name="contactInfo" autocomplete="email" placeholder="Email or phone"></div>
+            <div class="field"><label for="industry">行业</label><input id="industry" name="industry" placeholder="例如：仓库 / 物流 / 批发"></div>
+            <div class="field full"><label for="problem">最想减少的重复工作 *</label><textarea id="problem" name="problem" required placeholder="例如：每天收到订单邮件后，需要手工把客户、产品、数量和地址复制到 Excel，再通知仓库。"></textarea></div>
+            <div class="form-note">提交后会打开你的邮件应用，并自动整理成咨询邮件，由你确认发送。</div>
+            <button class="btn btn-primary" type="submit">免费评估这个流程</button>
+          </form>
         </div>
       </div>
     </section>
@@ -326,5 +441,30 @@
       </div>
     </div>
   </footer>
+  <script>
+    document.getElementById('leadForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const company = document.getElementById('company').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const contactInfo = document.getElementById('contactInfo').value.trim();
+      const industry = document.getElementById('industry').value.trim();
+      const problem = document.getElementById('problem').value.trim();
+
+      const subject = 'YIAN Flow 自动化流程评估' + (company ? ' - ' + company : '');
+      const body = [
+        '公司名称：' + (company || '未填写'),
+        '联系人：' + (name || '未填写'),
+        '联系方式：' + (contactInfo || '未填写'),
+        '行业：' + (industry || '未填写'),
+        '',
+        '目前最重复、最耗时间的工作：',
+        problem
+      ].join('\n');
+
+      window.location.href = 'mailto:louisong1021@gmail.com?subject='
+        + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+    });
+  </script>
 </body>
 </html>
