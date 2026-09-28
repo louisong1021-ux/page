@@ -17,7 +17,7 @@
 
 欢迎访问这个仓库。这里存放学习工具、羽毛球工具及其他公开网页。
 
-这个仓库目前包含五个网页项目，以及一个迁移记录文件夹。下面介绍部分项目。
+这个仓库存放多个独立网页项目，以及迁移与发布记录。下面介绍主要项目。
 
 ## 项目访问总览
 
@@ -25,6 +25,7 @@
 |---|---|---|
 | CSLB C10 电工学习工具 | 电工考试学习、学习卡、自测复习 | `https://louisong1021-ux.github.io/page/cslb-study-tool/` |
 | YIAN Service 工业服务网站 | 工厂搬迁、设备安装维修、仓库及自动化服务 | `https://louisong1021-ux.github.io/page/yianservice/` |
+| YIAN Flow｜颐安智流 | 企业流程自动化、AI 集成、订单/客户/数据工作流自动化 | `https://louisong1021-ux.github.io/page/yian-flow/` |
 | 迁移记录与检查点 | 仓库整理记录，不是正式网页工具 | `https://github.com/louisong1021-ux/page/tree/main/move-checkpoint` |
 | 仓库首页 | 查看项目说明和源码结构 | `https://github.com/louisong1021-ux/page` |
 
@@ -70,6 +71,7 @@ https://github.com/louisong1021-ux/page/tree/main/move-checkpoint
 /
 ├── README.md                     当前访客说明文件
 ├── cslb-study-tool/              CSLB C10 电工学习工具
+├── yian-flow/                    YIAN Flow 企业流程自动化与 AI 集成官网
 └── move-checkpoint/              迁移记录与历史检查点
 ```
 
@@ -102,4 +104,21 @@ https://louisong1021-ux.github.io/page/yianservice/
 
 ```text
 https://github.com/louisong1021-ux/page/tree/main/yianservice
+```
+
+
+### YIAN Flow｜颐安智流
+
+用于介绍 YIAN Flow 的企业流程自动化与 AI 集成服务，重点面向仓库、物流、批发、工厂、建材、电商及其他重复流程较多的中小企业。
+
+完整访问地址：
+
+```text
+https://louisong1021-ux.github.io/page/yian-flow/
+```
+
+项目源码文件夹：
+
+```text
+https://github.com/louisong1021-ux/page/tree/main/yian-flow
 ```
