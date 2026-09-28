@@ -24,6 +24,7 @@
 | 项目 | 用途 | 完整访问地址 |
 |---|---|---|
 | CSLB C10 电工学习工具 | 电工考试学习、学习卡、自测复习 | `https://louisong1021-ux.github.io/page/cslb-study-tool/` |
+| YIAN Service 工业服务网站 | 工厂搬迁、设备安装维修、仓库及自动化服务 | `https://louisong1021-ux.github.io/page/yianservice/` |
 | 迁移记录与检查点 | 仓库整理记录，不是正式网页工具 | `https://github.com/louisong1021-ux/page/tree/main/move-checkpoint` |
 | 仓库首页 | 查看项目说明和源码结构 | `https://github.com/louisong1021-ux/page` |
 
@@ -85,3 +86,20 @@ https://github.com/louisong1021-ux/page/tree/main/move-checkpoint
 这里的网页工具主要用于学习、复习和流程辅助，不替代正式培训、考试资料、法律意见、人事合规审核或专业判断。
 
 如果用于正式工作场景，建议结合公司内部流程、HR 要求和当地法规一起使用。
+
+
+### YIAN Service 工业服务网站
+
+用于展示位于洛杉矶、服务全美国的工业搬迁、机械设备搬运安装、设备维修、仓库设施及自动化设备服务。
+
+完整访问地址：
+
+```text
+https://louisong1021-ux.github.io/page/yianservice/
+```
+
+项目源码文件夹：
+
+```text
+https://github.com/louisong1021-ux/page/tree/main/yianservice
+```
