@@ -3,20 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="YIAN Services provides factory and warehouse relocation, machinery moving and installation, equipment repair, production line relocation, facility maintenance, conveyor and warehouse automation installation from Southern California with nationwide U.S. project support." />
+  <meta name="description" content="YIAN Services provides factory relocation, machinery moving and installation, equipment repair, conveyor and warehouse automation services in Southern California and nationwide." />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <meta name="googlebot" content="index,follow" />
   <meta name="theme-color" content="#ffffff" />
-  <title>YIAN Services | Industrial Relocation, Machinery Installation & Facility Services</title>
+  <link rel="canonical" href="https://www.yianservices.com/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="YIAN Services" />
+  <meta property="og:title" content="YIAN Services | Factory Relocation & Machinery Installation" />
+  <meta property="og:description" content="Factory and warehouse relocation, machinery moving and installation, equipment repair, production lines, conveyors and warehouse automation. Southern California based with nationwide project support." />
+  <meta property="og:url" content="https://www.yianservices.com/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="zh_CN" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="YIAN Services | Factory Relocation & Machinery Installation" />
+  <meta name="twitter:description" content="Industrial relocation, machinery installation, equipment repair and warehouse automation services from Southern California with nationwide support." />
+
+  <title>YIAN Services | Factory Relocation & Machinery Installation</title>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"YIAN Services",
-    "alternateName":"颐安团队",
-    "url":"https://www.yianservices.com",
-    "email":"rui@yianservices.com",
-    "telephone":"+1-840-272-3800",
-    "address":{"@type":"PostalAddress","streetAddress":"3100 Chino Hills Pkwy","addressLocality":"Chino Hills","addressRegion":"CA","postalCode":"91709","addressCountry":"US"},
-    "areaServed":{"@type":"Country","name":"United States"}
+    "@graph":[
+      {
+        "@type":"Organization",
+        "@id":"https://www.yianservices.com/#organization",
+        "name":"YIAN Services",
+        "alternateName":"颐安团队",
+        "url":"https://www.yianservices.com/",
+        "email":"rui@yianservices.com",
+        "telephone":"+1-840-272-3800",
+        "address":{
+          "@type":"PostalAddress",
+          "streetAddress":"3100 Chino Hills Pkwy",
+          "addressLocality":"Chino Hills",
+          "addressRegion":"CA",
+          "postalCode":"91709",
+          "addressCountry":"US"
+        },
+        "areaServed":{
+          "@type":"Country",
+          "name":"United States"
+        },
+        "contactPoint":{
+          "@type":"ContactPoint",
+          "telephone":"+1-840-272-3800",
+          "email":"rui@yianservices.com",
+          "contactType":"customer service",
+          "areaServed":"US",
+          "availableLanguage":["English","Chinese"]
+        },
+        "hasOfferCatalog":{
+          "@type":"OfferCatalog",
+          "name":"Industrial Services",
+          "itemListElement":[
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"Factory & Warehouse Relocation"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"Machinery Moving & Installation"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"Equipment Repair & Maintenance"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"Production Line Relocation & Installation"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"Conveyor & Warehouse Automation Installation"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"Warehouse & Facility Maintenance and Upgrades"}}
+          ]
+        }
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://www.yianservices.com/#website",
+        "url":"https://www.yianservices.com/",
+        "name":"YIAN Services",
+        "alternateName":"颐安团队",
+        "publisher":{"@id":"https://www.yianservices.com/#organization"},
+        "inLanguage":["en-US","zh-CN"]
+      },
+      {
+        "@type":"FAQPage",
+        "@id":"https://www.yianservices.com/#faq",
+        "mainEntity":[
+          {
+            "@type":"Question",
+            "name":"Do you provide industrial relocation services outside Southern California?",
+            "acceptedAnswer":{"@type":"Answer","text":"Yes. YIAN Services is based in Southern California and evaluates local and interstate industrial projects across the United States based on scope, location, equipment and schedule."}
+          },
+          {
+            "@type":"Question",
+            "name":"What information should I send for an initial project review?",
+            "acceptedAnswer":{"@type":"Answer","text":"Send the project city and state, equipment or site photos, equipment model or approximate size, and a short description of the work needed."}
+          },
+          {
+            "@type":"Question",
+            "name":"Can you evaluate both single-machine moves and full facility relocations?",
+            "acceptedAnswer":{"@type":"Answer","text":"Yes. Projects can range from a single machine move or installation to production areas, warehouses and full facility relocations."}
+          },
+          {
+            "@type":"Question",
+            "name":"Do you support conveyor and warehouse automation projects?",
+            "acceptedAnswer":{"@type":"Answer","text":"Yes. YIAN Services can evaluate conveyor, production line and warehouse automation equipment installation, relocation and related project support."}
+          }
+        ]
+      }
+    ]
   }
   </script>
   <style>
@@ -131,6 +217,10 @@
     .step-num{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eaf3ff;color:#0071e3;font-weight:700;margin-bottom:52px}
     .step h3{font-size:21px;letter-spacing:-.02em}
     .step p{color:var(--muted);font-size:16px;margin-bottom:0}
+    .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .faq-item{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px 28px}
+    .faq-item h3{font-size:21px;letter-spacing:-.02em;margin-bottom:10px}
+    .faq-item p{font-size:16px;color:var(--muted);margin-bottom:0}
     .quote-section{background:#fff}
     .quote-wrap{display:grid;grid-template-columns:.82fr 1.18fr;gap:52px;align-items:start}
     .quote-copy{padding-top:20px}
@@ -174,7 +264,7 @@
       h1{font-size:49px}.hero-lead{font-size:19px}.service-line{font-size:12px;line-height:1.55}
       .trust-strip{margin-top:-24px}.trust-grid{grid-template-columns:1fr}
       .trust-item{border-right:0;border-bottom:1px solid var(--line)!important}.trust-item:last-child{border-bottom:0!important}
-      .section{padding:80px 0}.cards,.project-grid,.process-grid{grid-template-columns:1fr}
+      .section{padding:80px 0}.cards,.project-grid,.process-grid,.faq-grid{grid-template-columns:1fr}
       .card{min-height:265px}.card-icon{margin-top:34px}
       .coverage-row{flex-direction:column}.coverage-row span{text-align:left}
       .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.quote-card{padding:22px}
@@ -324,6 +414,49 @@
       </div>
     </section>
 
+    <section id="faq" class="section capability-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker" data-zh="常见问题" data-en="Frequently Asked Questions">常见问题</p>
+          <h2 data-zh="项目开始前，客户通常会问这些。" data-en="Common questions before a project starts.">项目开始前，客户通常会问这些。</h2>
+          <p data-zh="如果你的项目情况不同，也可以直接联系我们进行初步评估。"
+             data-en="If your project is different, contact us directly for an initial review.">
+            如果你的项目情况不同，也可以直接联系我们进行初步评估。
+          </p>
+        </div>
+        <div class="faq-grid">
+          <article class="faq-item">
+            <h3 data-zh="你们只服务南加州吗？" data-en="Do you only serve Southern California?">你们只服务南加州吗？</h3>
+            <p data-zh="不是。颐安团队以南加州为基地，本地及跨州工业项目均可根据施工范围、地点、设备和时间要求进行评估。"
+               data-en="No. YIAN Services is based in Southern California and evaluates local and interstate industrial projects across the United States based on scope, location, equipment and schedule.">
+              不是。颐安团队以南加州为基地，本地及跨州工业项目均可根据施工范围、地点、设备和时间要求进行评估。
+            </p>
+          </article>
+          <article class="faq-item">
+            <h3 data-zh="初步评估需要提供什么资料？" data-en="What should I send for an initial review?">初步评估需要提供什么资料？</h3>
+            <p data-zh="提供项目所在城市和州、设备或现场照片、设备型号或大致尺寸，以及简单的工作需求说明即可。"
+               data-en="Send the project city and state, equipment or site photos, equipment model or approximate size, and a short description of the work needed.">
+              提供项目所在城市和州、设备或现场照片、设备型号或大致尺寸，以及简单的工作需求说明即可。
+            </p>
+          </article>
+          <article class="faq-item">
+            <h3 data-zh="单台设备和整厂搬迁都可以吗？" data-en="Can you evaluate both single-machine moves and full facility relocations?">单台设备和整厂搬迁都可以吗？</h3>
+            <p data-zh="可以。项目范围可以从单台设备移位、安装，到生产区域、仓库以及整厂搬迁。"
+               data-en="Yes. Projects can range from a single machine move or installation to production areas, warehouses and full facility relocations.">
+              可以。项目范围可以从单台设备移位、安装，到生产区域、仓库以及整厂搬迁。
+            </p>
+          </article>
+          <article class="faq-item">
+            <h3 data-zh="输送线和仓库自动化项目可以做吗？" data-en="Do you support conveyor and warehouse automation projects?">输送线和仓库自动化项目可以做吗？</h3>
+            <p data-zh="可以评估输送线、生产线及仓库自动化设备的安装、移位和相关项目支持。"
+               data-en="Yes. YIAN Services can evaluate conveyor, production line and warehouse automation equipment installation, relocation and related project support.">
+              可以评估输送线、生产线及仓库自动化设备的安装、移位和相关项目支持。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="quote" class="section quote-section">
       <div class="container">
         <div class="quote-wrap">
@@ -396,7 +529,7 @@
   <script>
     const btn=document.getElementById('langBtn');
     const form=document.getElementById('projectForm');
-    let lang='zh';
+    let lang=(navigator.language||'en').toLowerCase().startsWith('zh')?'zh':'en';
 
     function applyLanguage(){
       document.documentElement.lang=lang==='zh'?'zh-CN':'en';
