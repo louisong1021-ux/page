@@ -26,6 +26,7 @@
 | CSLB C10 电工学习工具 | 电工考试学习、学习卡、自测复习 | `https://louisong1021-ux.github.io/page/cslb-study-tool/` |
 | YIAN Service 工业服务网站 | 工厂搬迁、设备安装维修、仓库及自动化服务 | `https://louisong1021-ux.github.io/page/yianservice/` |
 | YIAN Flow｜颐安智流 | 企业流程自动化、AI 集成、订单/客户/数据工作流自动化 | `https://louisong1021-ux.github.io/page/yian-flow/` |
+| 快递站自动化系统报价 | 多仓库扫码、PDF识别、摄像头识别及 UPS 自动录入方案 | `https://louisong1021-ux.github.io/page/courier-automation-quote/` |
 | 迁移记录与检查点 | 仓库整理记录，不是正式网页工具 | `https://github.com/louisong1021-ux/page/tree/main/move-checkpoint` |
 | 仓库首页 | 查看项目说明和源码结构 | `https://github.com/louisong1021-ux/page` |
 
@@ -121,4 +122,21 @@ https://louisong1021-ux.github.io/page/yian-flow/
 
 ```text
 https://github.com/louisong1021-ux/page/tree/main/yian-flow
+```
+
+
+### 快递站自动化系统报价
+
+用于向快递站客户展示三个业务场景的解决方案与报价：多仓库 PDA / 扫码枪上传并录入 UPS、PDF 批量条码识别并录入 UPS、智能摄像头识别并集成桌面端录入 UPS。
+
+完整访问地址：
+
+```text
+https://louisong1021-ux.github.io/page/courier-automation-quote/
+```
+
+项目源码文件夹：
+
+```text
+https://github.com/louisong1021-ux/page/tree/main/courier-automation-quote
 ```
