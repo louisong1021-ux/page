@@ -154,7 +154,7 @@
   <div class="wrap hero">
     <span class="eyebrow">客户方案 · 快递站自动化</span>
     <h1>快递站自动化系统方案及报价</h1>
-    <p>围绕三个实际业务场景分别设计解决方案：多仓库扫码上传、PDF批量条码识别、智能摄像头识别。三类数据最终都可通过桌面端自动录入 UPS 系统。</p>
+    <p>围绕三个实际业务场景分别设计解决方案：多仓库扫码上传、PDF批量条码识别、智能摄像头识别。三类数据最终都可通过桌面端自动录入 UPS 系统。桌面端模拟键盘自动输入软件作为通用核心模块单独报价。</p>
     <div class="hero-actions">
       <a class="btn btn-light" href="#pricing">查看报价汇总</a>
       <button class="btn btn-ghost" onclick="window.print()">打印 / 保存 PDF</button>
@@ -165,6 +165,7 @@
 <nav>
   <div class="wrap">
     <a href="#overview">需求总览</a>
+    <a href="#desktop-module">桌面端自动输入</a>
     <a href="#need1">需求一：仓库扫码</a>
     <a href="#need2">需求二：PDF识别</a>
     <a href="#need3">需求三：摄像头</a>
@@ -198,6 +199,30 @@
     </div>
   </section>
 
+  <section id="desktop-module">
+    <h2 class="section-title">通用核心模块：桌面端 UPS 模拟键盘自动输入软件</h2>
+    <p class="section-sub">用于将服务器、PDF识别或摄像头识别得到的数据自动输入到 UPS 系统。</p>
+    <div class="card">
+      <h3>功能说明</h3>
+      <div class="flow">
+        <span class="step">接收已整理数据</span><span class="arrow">→</span>
+        <span class="step">桌面端自动读取</span><span class="arrow">→</span>
+        <span class="step">模拟键盘输入</span><span class="arrow">→</span>
+        <span class="step">自动录入 UPS</span>
+      </div>
+      <ul class="feature-list">
+        <li>安装在快递站电脑端，例如 B 备用电脑。</li>
+        <li>自动读取来自服务器、PDF识别或摄像头识别的待处理数据。</li>
+        <li>通过模拟键盘方式将数据自动输入 UPS 系统。</li>
+        <li>减少人工逐条复制、粘贴和键盘录入。</li>
+        <li>可作为三个需求场景共用的桌面端输入模块。</li>
+      </ul>
+      <div class="pricebox">
+        <strong>$600</strong> <span>一次性软件费用</span>
+      </div>
+    </div>
+  </section>
+
   <section id="need1">
     <h2 class="section-title">需求一：各仓库扫码后自动上传并录入 UPS</h2>
     <p class="section-sub">适用于多个仓库分别扫码、快递站集中处理的工作模式。</p>
@@ -216,7 +241,7 @@
         <li>各仓库可独立扫码，数据集中到服务器。</li>
         <li>支持按 50 条或 100 条形成处理批次。</li>
         <li>快递站 B 备用电脑自动获取待处理数据。</li>
-        <li>桌面端通过模拟键盘方式自动录入 UPS，减少人工重复输入。</li>
+        <li>桌面端通过模拟键盘方式自动录入 UPS，减少人工重复输入；桌面端自动输入软件单独报价 $600。</li>
       </ul>
 
       <div class="optional">
@@ -246,8 +271,8 @@
           <li>客户独立服务器环境，方便后期扩展</li>
         </ul>
         <div class="pricebox">
-          <strong>$3,000</strong> <span>一次性开发及部署</span><br />
-          <span>云服务器预算约 <b>$30–$80/月</b></span>
+          <strong>$3,000</strong> <span>一次性服务器系统开发及部署</span><br />
+          <span>云服务器预算约 <b>$30–$80/月</b></span><br /><span>桌面端 UPS 模拟键盘自动输入软件：<b>+$600 一次性</b></span>
         </div>
       </div>
 
@@ -266,8 +291,8 @@
           <li>B 备用电脑连接及桌面端数据读取</li>
         </ul>
         <div class="pricebox">
-          <strong>$500</strong> <span>一次性接入费</span><br />
-          <span>服务器系统使用费 <b>$150/月</b></span>
+          <strong>$500</strong> <span>一次性服务器接入费</span><br />
+          <span>服务器系统使用费 <b>$150/月</b></span><br /><span>桌面端 UPS 模拟键盘自动输入软件：<b>+$600 一次性</b></span>
         </div>
       </div>
     </div>
@@ -347,6 +372,12 @@
         </thead>
         <tbody>
           <tr>
+            <td><b>通用桌面端模块</b></td>
+            <td>桌面端 UPS 模拟键盘自动输入软件</td>
+            <td class="price">$600 一次性</td>
+            <td>接收整理后的数据并自动输入 UPS；三个场景均可使用</td>
+          </tr>
+          <tr>
             <td rowspan="3"><b>需求一</b><br />多仓库扫码 → UPS</td>
             <td>方案 A：客户独立服务器</td>
             <td class="price">$3,000 一次性<br />+$30–$80/月</td>
@@ -388,15 +419,15 @@
       <div class="summary-grid">
         <div class="summary-item">
           <strong>仓库扫码数据</strong>
-          PDA / 扫码枪 → 服务器 → B 备用电脑 → UPS
+          PDA / 扫码枪 → 服务器 → B 备用电脑桌面端 → UPS
         </div>
         <div class="summary-item">
           <strong>PDF 数据</strong>
-          PDF 批量识别 → 桌面端 → UPS
+          PDF 批量识别 → 桌面端模拟输入 → UPS
         </div>
         <div class="summary-item">
           <strong>摄像头数据</strong>
-          智能摄像头 → 桌面端识别 → UPS
+          智能摄像头 → 桌面端识别 / 模拟输入 → UPS
         </div>
       </div>
       <p style="margin:18px 0 0;color:rgba(255,255,255,.8)">核心目标：减少人工扫码、人工识别和键盘重复输入，让不同来源的数据更自动化地进入 UPS 系统。</p>
