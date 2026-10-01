@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="快递站自动化系统方案及报价：多仓库扫码上传、PDF批量条码识别、智能摄像头识别并自动录入UPS。" />
+  <meta name="description" content="快递站自动化系统方案及报价：四个业务需求——多仓库扫码、PDF批量识别、智能摄像头识别、手动上传，并自动录入UPS。" />
   <title>快递站自动化系统方案及报价</title>
   <style>
     :root{
@@ -125,7 +125,7 @@
       background:#0f172a;color:#fff;border-radius:24px;padding:28px;margin-top:34px
     }
     .summary h2{margin-top:0}
-    .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .summary-item{
       background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
       border-radius:16px;padding:18px
@@ -154,7 +154,11 @@
   <div class="wrap hero">
     <span class="eyebrow">客户方案 · 快递站自动化</span>
     <h1>快递站自动化系统方案及报价</h1>
-    <p>系统共有 4 个数据入口：<b>1）各个仓库分别扫码上传</b>，各仓库使用 PDA / 扫码枪采集数据后上传到服务器；<b>2）PDF 自动识别</b>，客户将 PDF 放入指定 Google Drive，由服务器端 PDF 识别模块自动读取并识别条码 / 单号；<b>3）摄像头扫描</b>，通过摄像头识别条码 / 单号并将结果加入服务器任务队列；<b>4）手动上传</b>，客户可在本机手动添加文本或文档并加入同一队列。以上数据最终统一进入服务器处理队列，再由备用电脑按顺序自动录入 UPS 等物流公司系统。</p>
+    <p>本页在原有功能和报价不变的基础上，将业务逻辑整理为 <b>4 个需求</b>：<b>1）各仓库分别扫码上传</b>；<b>2）PDF 从 Google Drive 自动读取并识别</b>；<b>3）摄像头扫描识别</b>；<b>4）本机手动上传</b>。四项需求分别按照下方原方案执行，最终通过桌面端 / 备用电脑完成 UPS 等物流公司系统的自动录入。</p>
+    <div class="optional" style="margin-top:18px">
+      <div class="label">逻辑整理说明</div>
+      <p style="margin:4px 0 0;color:#744210">本页面仅把现有方案明确整理成四个需求入口，原有开发内容、功能范围和报价保持不变。</p>
+    </div>
     <div class="hero-actions">
       <a class="btn btn-light" href="#pricing">查看报价汇总</a>
       <button class="btn btn-ghost" onclick="window.print()">打印 / 保存 PDF</button>
@@ -194,10 +198,10 @@
       <div class="card">
         <div class="scenario-number">03</div>
         <h3>摄像头识别 → UPS</h3>
-        <p>固定工作台摄像头自动识别条码 / 单号，识别结果上传服务器并进入统一任务队列，再由备用机自动录入 UPS。</p>
-        <span class="tag">自动识别入队</span>
+        <p>固定工作台摄像头自动识别条码 / 单号，识别结果进入桌面端并自动录入 UPS；后续可按原方案需要增加服务器同步。</p>
+        <span class="tag">桌面端集成</span>
       </div>
-      <div class="card" id="need4">
+      <div class="card">
         <div class="scenario-number">04</div>
         <h3>手动上传 → UPS</h3>
         <p>客户可在本机手动添加文本内容或文本文档，上传后自动进入服务器统一任务队列，由备用机按顺序自动录入 UPS。</p>
@@ -208,7 +212,7 @@
 
   <section id="desktop-module">
     <h2 class="section-title">通用核心模块：桌面端 UPS 模拟键盘自动输入软件</h2>
-    <p class="section-sub">用于将服务器、PDF识别或摄像头识别得到的数据自动输入到 UPS 系统。</p>
+    <p class="section-sub">作为通用执行端，用于处理服务器、PDF识别、摄像头识别以及手动上传形成的待处理数据，并自动输入 UPS 系统。</p>
     <div class="card">
       <h3>功能说明</h3>
       <div class="flow">
@@ -219,10 +223,10 @@
       </div>
       <ul class="feature-list">
         <li>安装在快递站电脑端，例如 B 备用电脑。</li>
-        <li>自动读取来自服务器、PDF识别或摄像头识别的待处理数据。</li>
+        <li>自动读取来自服务器、PDF识别、摄像头识别或手动上传形成的待处理数据。</li>
         <li>通过模拟键盘方式将数据自动输入 UPS 系统。</li>
         <li>减少人工逐条复制、粘贴和键盘录入。</li>
-        <li>可作为三个需求场景共用的桌面端输入模块。</li>
+        <li>可作为四个需求场景共用的桌面端输入模块。</li>
       </ul>
       <div class="pricebox">
         <strong>$600</strong> <span>一次性软件费用</span>
@@ -331,7 +335,8 @@
         <span class="step">PDF 软件自动读取</span><span class="arrow">→</span>
         <span class="step">识别条码 / 指定信息</span><span class="arrow">→</span>
         <span class="step">上传服务器</span><span class="arrow">→</span>
-        <span class="step">备用机自动加入队列</span><span class="arrow">→</span>
+        <span class="step">服务器加入统一队列</span><span class="arrow">→</span>
+        <span class="step">B 备用机自动获取</span><span class="arrow">→</span>
         <span class="step">自动录入 UPS</span>
       </div>
       <ul class="feature-list">
@@ -344,7 +349,7 @@
       </ul>
       <div class="optional" style="margin-top:16px">
         <div class="label">补充说明</div>
-        <p style="margin:4px 0 0;color:#744210"><b>手机端操作说明：</b>客户收到微信中的 PDF 后，只需在手机上将文件保存或上传到指定 Google Drive 文件夹。后续的读取、识别、上传服务器、加入备用机队列和 UPS 自动录入均由系统自动完成。</p>
+        <p style="margin:4px 0 0;color:#744210"><b>手机端操作说明：</b>客户收到微信中的 PDF 后，只需在手机上将文件保存或上传到指定 Google Drive 文件夹。后续的读取、识别、上传服务器、进入服务器任务队列、由备用机自动获取以及 UPS 自动录入均由系统自动完成。</p>
       </div>
       <div class="pricebox">
         <strong>$800</strong> <span>一次性软件开发</span>
@@ -385,6 +390,33 @@
     </div>
   </section>
 
+  <section id="need4">
+    <h2 class="section-title">需求四：本机手动上传并排队录入 UPS</h2>
+    <p class="section-sub">该需求对应桌面端自动输入软件的可选增强功能，不改变原有 $600 基础软件功能。</p>
+
+    <div class="card">
+      <h3>业务流程</h3>
+      <div class="flow">
+        <span class="step">本机手动添加文本 / 文本文档</span><span class="arrow">→</span>
+        <span class="step">上传并加入处理队列</span><span class="arrow">→</span>
+        <span class="step">B 备用电脑按顺序处理</span><span class="arrow">→</span>
+        <span class="step">自动录入 UPS</span>
+      </div>
+      <ul class="feature-list">
+        <li>客户可在本机手动添加文本内容或文本文档。</li>
+        <li>手动任务与服务器、Google Drive / PDF 等待处理数据一起排队。</li>
+        <li>B 备用电脑按照队列顺序自动执行并录入物流公司系统。</li>
+        <li>该功能属于桌面端自动输入软件的可选增强项。</li>
+      </ul>
+      <div class="pricebox">
+        <strong>+$300</strong> <span>一次性增强功能开发费</span>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <b>说明：</b>这是对现有桌面端 $600 软件增加的手动任务入口，不是另外一套独立软件。
+      </div>
+    </div>
+  </section>
+
   <section id="pricing">
     <h2 class="section-title">报价汇总</h2>
     <p class="section-sub">客户可按实际业务需求单独选择或组合。</p>
@@ -400,15 +432,10 @@
         </thead>
         <tbody>
           <tr>
-            <td rowspan="2"><b>通用桌面端模块</b></td>
+            <td><b>通用桌面端模块</b></td>
             <td>桌面端 UPS 模拟键盘自动输入软件</td>
             <td class="price">$600 一次性</td>
-            <td>自动接收服务器或其他已整理数据，并按队列自动输入 UPS</td>
-          </tr>
-          <tr>
-            <td>增强功能：本机手动文本任务上传 / 排队</td>
-            <td class="price">+$300 一次性</td>
-            <td>手动添加文本内容或文本文档后进入同一队列；Google Drive 数据需配合 PDF 识别软件</td>
+            <td>自动接收待处理数据，并通过模拟键盘方式自动输入 UPS</td>
           </tr>
           <tr>
             <td rowspan="3"><b>需求一</b><br />多仓库扫码 → UPS</td>
@@ -443,6 +470,12 @@
             <td class="price">待确认</td>
             <td>根据最终识别需求报价；硬件另计</td>
           </tr>
+          <tr>
+            <td><b>需求四</b><br />手动上传 → UPS</td>
+            <td>桌面端增强功能：本机手动文本任务上传 / 排队</td>
+            <td class="price">+$300 一次性</td>
+            <td>基于 $600 桌面端自动输入软件增加手动任务入口</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -451,16 +484,20 @@
       <h2>整体目标</h2>
       <div class="summary-grid">
         <div class="summary-item">
-          <strong>仓库扫码数据</strong>
+          <strong>需求一 · 仓库扫码</strong>
           PDA / 扫码枪 → 服务器 → B 备用电脑桌面端 → UPS
         </div>
         <div class="summary-item">
-          <strong>PDF 数据</strong>
-          PDF 批量识别 → 桌面端模拟输入 → UPS
+          <strong>需求二 · PDF 数据</strong>
+          微信 PDF → Google Drive → 自动识别 → 服务器队列 → B 备用电脑 → UPS
         </div>
         <div class="summary-item">
-          <strong>摄像头数据</strong>
+          <strong>需求三 · 摄像头</strong>
           智能摄像头 → 桌面端识别 / 模拟输入 → UPS
+        </div>
+        <div class="summary-item">
+          <strong>需求四 · 手动上传</strong>
+          本机文本 / 文档 → 处理队列 → B 备用电脑 → UPS
         </div>
       </div>
       <p style="margin:18px 0 0;color:rgba(255,255,255,.8)">核心目标：减少人工扫码、人工识别和键盘重复输入，让不同来源的数据更自动化地进入 UPS 系统。</p>
