@@ -319,19 +319,25 @@
     <div class="card">
       <h3>业务流程</h3>
       <div class="flow">
-        <span class="step">批量 PDF</span><span class="arrow">→</span>
-        <span class="step">自动读取</span><span class="arrow">→</span>
+        <span class="step">手机微信接收 PDF</span><span class="arrow">→</span>
+        <span class="step">上传到指定 Google Drive</span><span class="arrow">→</span>
+        <span class="step">PDF 软件自动读取</span><span class="arrow">→</span>
         <span class="step">识别条码 / 指定信息</span><span class="arrow">→</span>
-        <span class="step">提取与整理</span><span class="arrow">→</span>
-        <span class="step">异常提示</span><span class="arrow">→</span>
-        <span class="step">桌面端自动录入 UPS</span>
+        <span class="step">上传服务器</span><span class="arrow">→</span>
+        <span class="step">备用机自动加入队列</span><span class="arrow">→</span>
+        <span class="step">自动录入 UPS</span>
       </div>
       <ul class="feature-list">
-        <li>支持 PDF 批量导入和自动读取。</li>
-        <li>自动识别并提取条码或需要的字段。</li>
-        <li>无法识别或异常结果可单独提示。</li>
-        <li>识别结果进入桌面端自动录入 UPS。</li>
+        <li>客户可直接在手机微信中接收 PDF，并从手机上传到指定 Google Drive 文件夹，无需回到电脑操作。</li>
+        <li>PDF 批量识别软件自动监控并读取 Google Drive 中的新 PDF 文件。</li>
+        <li>自动识别并提取 PDF 中的条码、单号或指定字段。</li>
+        <li>识别完成后的数据自动上传到服务器，并进入统一任务队列。</li>
+        <li>B 备用电脑自动获取队列中的任务，按顺序通过桌面端软件自动录入 UPS 系统。</li>
+        <li>无法识别或异常结果可单独提示，降低错误数据直接进入物流系统的风险。</li>
       </ul>
+      <div class="note" style="margin-top:16px">
+        <b>手机端操作说明：</b>客户收到微信中的 PDF 后，只需在手机上将文件保存或上传到指定 Google Drive 文件夹。后续的读取、识别、上传服务器、加入备用机队列和 UPS 自动录入均由系统自动完成。
+      </div>
       <div class="pricebox">
         <strong>$800</strong> <span>一次性软件开发</span>
       </div>
