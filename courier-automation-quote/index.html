@@ -68,7 +68,7 @@
     section{margin:0 0 34px}
     .section-title{font-size:28px;line-height:1.3;margin:0 0 8px}
     .section-sub{margin:0 0 20px;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
     .card{
       background:var(--card);border:1px solid var(--line);
       border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)
@@ -175,7 +175,7 @@
 
 <main class="wrap">
   <section id="overview">
-    <h2 class="section-title">三个核心需求</h2>
+    <h2 class="section-title">四个核心需求</h2>
     <p class="section-sub">客户可以按需求单独选择，也可以后续逐步组合。</p>
     <div class="grid">
       <div class="card">
@@ -193,8 +193,14 @@
       <div class="card">
         <div class="scenario-number">03</div>
         <h3>摄像头识别 → UPS</h3>
-        <p>固定工作台摄像头自动识别条码 / 单号，识别结果直接进入桌面端并自动录入 UPS。</p>
-        <span class="tag">桌面端集成</span>
+        <p>固定工作台摄像头自动识别条码 / 单号，识别结果上传服务器并进入统一任务队列，再由备用机自动录入 UPS。</p>
+        <span class="tag">自动识别入队</span>
+      </div>
+      <div class="card">
+        <div class="scenario-number">04</div>
+        <h3>手动上传 → UPS</h3>
+        <p>客户可在本机手动添加文本内容或文本文档，上传后自动进入服务器统一任务队列，由备用机按顺序自动录入 UPS。</p>
+        <span class="tag">可选增强功能</span>
       </div>
     </div>
   </section>
