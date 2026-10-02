@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         ChatGPT 快捷按钮 Stable
 // @namespace    yian
-// @version      2.0.0
-// @description  iPad Safari：只跟随 ChatGPT 主输入框，不受回复里的其他框体影响。
+// @version      2.1.0
+// @description  iPad Safari：按钮固定在 ChatGPT 输入区上方，不跟随任何回复框体移动。
 // @match        https://chatgpt.com/*
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/louisong1021-ux/page/main/userscripts/chatgpt_quick_buttons_stable.user.js
@@ -17,33 +17,39 @@
   let positionRaf = 0;
   let lastShell = null;
 
-  function findComposer() {
-    // 1) ChatGPT 正式主输入框：优先且基本唯一。
-    const primary = document.querySelector('#prompt-textarea');
-    if (primary && primary.isConnected) return primary;
+  function isVisible(el) {
+    if (!el || !el.isConnected) return false;
+    const rect = el.getBoundingClientRect();
+    const style = getComputedStyle(el);
+    return (
+      rect.width > 80 &&
+      rect.height > 20 &&
+      style.display !== 'none' &&
+      style.visibility !== 'hidden'
+    );
+  }
 
-    // 2) 只在 ChatGPT unified composer 容器内部寻找。
+  function findComposer() {
+    const primary = document.querySelector('#prompt-textarea');
+    if (isVisible(primary)) return primary;
+
     const unified = document.querySelector('[data-type="unified-composer"]');
     if (unified) {
       const el = unified.querySelector(
-        '#prompt-textarea, [contenteditable="true"][data-lexical-editor="true"], textarea'
+        'textarea, [contenteditable="true"][data-lexical-editor="true"], [contenteditable="true"]'
       );
-      if (el) return el;
+      if (isVisible(el)) return el;
     }
 
-    // 3) 最后只从真正发送按钮所属 form 内找，绝不扫描整页 contenteditable。
-    const send = document.querySelector(
-      'button[data-testid="send-button"], button[aria-label="Send prompt"], button[aria-label="Send"]'
-    );
-    const form = send?.closest('form');
-    if (form) {
-      const el = form.querySelector(
-        '#prompt-textarea, [contenteditable="true"][data-lexical-editor="true"], textarea'
-      );
-      if (el) return el;
-    }
+    // Fallback: choose the visible editable element nearest the bottom of the viewport.
+    const candidates = Array.from(
+      document.querySelectorAll('textarea, [contenteditable="true"]')
+    )
+      .filter(isVisible)
+      .filter(el => !el.closest('article, [data-message-author-role], pre, code, dialog, [role="dialog"]'))
+      .sort((a, b) => b.getBoundingClientRect().top - a.getBoundingClientRect().top);
 
-    return null;
+    return candidates[0] || null;
   }
 
   function findComposerShell() {
@@ -279,33 +285,16 @@
 
   function positionBar() {
     positionRaf = 0;
-
     const bar = document.getElementById(BAR_ID);
-    const shell = findComposerShell();
+    if (!bar) return;
 
-    if (!bar || !shell) return;
-
-    // 只有真正的主输入框 shell 才能改变按钮位置。
-    if (shell !== lastShell) lastShell = shell;
-
-    const rect = shell.getBoundingClientRect();
-    if (!rect.width || rect.width < 220) return;
-
-    const viewportPadding = 12;
-    let left = Math.max(viewportPadding, rect.left);
-    let width = Math.min(rect.width, window.innerWidth - left - viewportPadding);
-
-    // 保持在主输入框上方，并避开 ChatGPT 自带提示文字。
-    const gap = 34;
-    const bottom = Math.max(
-      64,
-      window.innerHeight - rect.top + gap
-    );
-
+    // Fixed viewport position. Never derive position from page content.
     Object.assign(bar.style, {
-      left: `${Math.round(left)}px`,
-      width: `${Math.round(width)}px`,
-      bottom: `${Math.round(bottom)}px`
+      left: 'auto',
+      right: '16px',
+      top: 'auto',
+      bottom: 'calc(126px + env(safe-area-inset-bottom))',
+      width: 'auto'
     });
   }
 
@@ -348,10 +337,9 @@
 
   createBar();
 
-  // 页面内容变化时只重新读取真正的 ChatGPT composer。
+  // Page content may change, but button position never follows it.
   const observer = new MutationObserver(() => {
     if (!document.getElementById(BAR_ID)) createBar();
-    schedulePosition();
   });
 
   observer.observe(document.documentElement, {
@@ -366,8 +354,9 @@
 
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', schedulePosition, { passive: true });
-    window.visualViewport.addEventListener('scroll', schedulePosition, { passive: true });
   }
 
-  setInterval(schedulePosition, 1500);
+  setInterval(() => {
+    if (!document.getElementById(BAR_ID)) createBar();
+  }, 1500);
 })();
