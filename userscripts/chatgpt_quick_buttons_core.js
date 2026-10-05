@@ -1,4 +1,4 @@
-// YIAN ChatGPT Quick Buttons Core v1.0.4
+// YIAN ChatGPT Quick Buttons Core v1.0.5
 (() => {
   'use strict';
 
@@ -203,8 +203,8 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        gap: 7px;
-        height: 54px;
+        gap: 6px;
+        height: 50px;
         padding: 0 4px;
         background: transparent;
         border: 0;
@@ -217,7 +217,7 @@
       #${BAR_ID} .yian-quick-btn {
         pointer-events: auto;
         min-width: 0;
-        height: 50px;
+        height: 46px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -231,10 +231,10 @@
         backdrop-filter: blur(16px) saturate(135%);
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 8px rgba(0,0,0,0.10);
         font: inherit;
-        font-size: 19px;
+        font-size: 18px;
         line-height: 1;
         font-weight: 600;
-        padding: 0 20px;
+        padding: 0 17px;
         margin: 0;
         cursor: pointer;
         touch-action: manipulation;
@@ -261,15 +261,15 @@
 
       @media (max-width: 600px) {
         #${BAR_ID} {
-          height: 50px;
-          gap: 6px;
+          height: 46px;
+          gap: 5px;
           padding: 0 3px;
         }
 
         #${BAR_ID} .yian-quick-btn {
-          height: 46px;
-          font-size: 18px;
-          padding: 0 17px;
+          height: 42px;
+          font-size: 17px;
+          padding: 0 15px;
         }
       }
     `;
