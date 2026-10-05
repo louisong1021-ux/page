@@ -1,4 +1,4 @@
-// YIAN ChatGPT Quick Buttons Core v1.0.0
+// YIAN ChatGPT Quick Buttons Core v1.0.1
 (() => {
   'use strict';
 
@@ -278,10 +278,21 @@
     const bar = document.getElementById(BAR_ID);
     if (!bar) return;
 
-    // Fixed viewport position. Never derive position from page content.
+    // Keep vertical position fixed. Only use the real ChatGPT composer
+    // to align the toolbar's right edge; never follow reply content.
+    let rightOffset = 16;
+    const shell = findComposerShell();
+
+    if (shell) {
+      const rect = shell.getBoundingClientRect();
+      if (rect.width > 220 && rect.right > 0) {
+        rightOffset = Math.max(12, Math.round(window.innerWidth - rect.right));
+      }
+    }
+
     Object.assign(bar.style, {
       left: 'auto',
-      right: '16px',
+      right: `${rightOffset}px`,
       top: 'auto',
       bottom: 'calc(126px + env(safe-area-inset-bottom))',
       width: 'auto'
