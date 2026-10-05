@@ -1,4 +1,4 @@
-// YIAN ChatGPT Quick Buttons Core v1.0.6
+// YIAN ChatGPT Quick Buttons Core v1.0.7
 (() => {
   'use strict';
 
@@ -331,10 +331,10 @@
       return button;
     }
 
+    bar.appendChild(makeButton('加微信', '加微信'));
     bar.appendChild(makeButton('写短信', '写短信'));
     bar.appendChild(makeButton('写邮件', '写邮件'));
     bar.appendChild(makeButton('发送', '发送'));
-    bar.appendChild(makeButton('加微信', '加微信'));
     bar.appendChild(makeButton('下一条', '下一条'));
 
     document.body.appendChild(bar);
