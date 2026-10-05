@@ -1,4 +1,4 @@
-// YIAN ChatGPT Quick Buttons Core v1.0.7
+// YIAN ChatGPT Quick Buttons Core v1.0.8
 (() => {
   'use strict';
 
