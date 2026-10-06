@@ -1,69 +1,13 @@
-const AIRPORT_ADDRESSES={
-  LAX:"1 World Way, Los Angeles, CA 90045",
-  ONT:"2500 E Airport Dr, Ontario, CA 91761",
-  SNA:"18601 Airport Way, Santa Ana, CA 92707",
-  LGB:"4100 Donald Douglas Dr, Long Beach, CA 90808",
-  BUR:"2627 N Hollywood Way, Burbank, CA 91505"
-};
-const corsHeaders={
-  "Access-Control-Allow-Origin":"*",
-  "Access-Control-Allow-Headers":"Content-Type",
-  "Access-Control-Allow-Methods":"GET,POST,OPTIONS",
-  "Content-Type":"application/json"
-};
-const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:corsHeaders});
+const AIRPORT_ADDRESSES={LAX:"1 World Way, Los Angeles, CA 90045",ONT:"2500 E Airport Dr, Ontario, CA 91761",SNA:"18601 Airport Way, Santa Ana, CA 92707",LGB:"4100 Donald Douglas Dr, Long Beach, CA 90808",BUR:"2627 N Hollywood Way, Burbank, CA 91505"};
+const corsHeaders={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Content-Type","Access-Control-Allow-Methods":"GET,POST,OPTIONS"};
+const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...corsHeaders,"Content-Type":"application/json"}});
 const round5=n=>Math.ceil(n/5)*5;
-async function routeMiles(env,origin,destination){
-  if(!env.GOOGLE_MAPS_API_KEY)throw new Error("GOOGLE_MAPS_API_KEY is not configured");
-  const r=await fetch("https://routes.googleapis.com/directions/v2:computeRoutes",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "X-Goog-Api-Key":env.GOOGLE_MAPS_API_KEY,
-      "X-Goog-FieldMask":"routes.distanceMeters,routes.duration"
-    },
-    body:JSON.stringify({origin:{address:origin},destination:{address:destination},travelMode:"DRIVE",routingPreference:"TRAFFIC_UNAWARE"})
-  });
-  const j=await r.json();
-  if(!r.ok||!j.routes?.[0]?.distanceMeters)throw new Error(j.error?.message||"Unable to calculate route");
-  return j.routes[0].distanceMeters/1609.344;
-}
-async function quoteAddress(req,env){
-  const b=await req.json();
-  const airport=String(b.airport||"").toUpperCase();
-  const airportAddress=AIRPORT_ADDRESSES[airport];
-  if(!airportAddress||!b.address)return json({error:"address and supported airport are required"},400);
-  const oneWay=await routeMiles(env,b.direction==="arrival"?airportAddress:b.address,b.direction==="arrival"?b.address:airportAddress);
-  const deadheadFactor=Number(env.DEADHEAD_FACTOR||1.55);
-  const rate=Number(env.RATE_PER_BILLABLE_MILE||1.65);
-  const minimum=Number(env.MIN_BASE_FARE||70);
-  const billableMiles=oneWay*deadheadFactor;
-  const baseFare=round5(Math.max(minimum,billableMiles*rate));
-  return json({success:true,baseFare,miles:Number(billableMiles.toFixed(2)),routeMiles:Number(oneWay.toFixed(2)),city:b.city||"",pricing:{deadheadFactor,rate,minimum}});
-}
-async function createBooking(req,env){
-  const b=await req.json();
-  if(!b.id||!b.name||!b.phone||!b.airport||!b.date)return json({error:"missing required booking fields"},400);
-  if(env.BOOKINGS_DB){
-    await env.BOOKINGS_DB.prepare("INSERT OR REPLACE INTO bookings (id, created_at, status, name, phone, airport, trip_date, payload) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-      .bind(b.id,b.createdAt||new Date().toISOString(),b.status||"Pending confirmation",b.name,b.phone,b.airport,b.date,JSON.stringify(b)).run();
-  }
-  return json({success:true,id:b.id,databaseSaved:!!env.BOOKINGS_DB});
-}
-async function getBooking(url,env){
-  if(!env.BOOKINGS_DB)return json({error:"database not configured"},503);
-  const id=url.pathname.split("/").pop();
-  const row=await env.BOOKINGS_DB.prepare("SELECT * FROM bookings WHERE id=?").bind(id).first();
-  return row?json({success:true,booking:{...row,payload:JSON.parse(row.payload)}}):json({error:"not found"},404);
-}
-export default{async fetch(req,env){
-  if(req.method==="OPTIONS")return new Response(null,{status:204,headers:corsHeaders});
-  const url=new URL(req.url);
-  try{
-    if(url.pathname==="/api/address-quote"&&req.method==="POST")return await quoteAddress(req,env);
-    if(url.pathname==="/api/bookings"&&req.method==="POST")return await createBooking(req,env);
-    if(url.pathname.startsWith("/api/bookings/")&&req.method==="GET")return await getBooking(url,env);
-    if(url.pathname==="/health")return json({ok:true});
-    return json({error:"not found"},404);
-  }catch(e){return json({error:e.message||"server error"},500)}
-}};
+async function routeMiles(env,origin,destination){if(!env.GOOGLE_MAPS_API_KEY)throw new Error("GOOGLE_MAPS_API_KEY is not configured");const r=await fetch("https://routes.googleapis.com/directions/v2:computeRoutes",{method:"POST",headers:{"Content-Type":"application/json","X-Goog-Api-Key":env.GOOGLE_MAPS_API_KEY,"X-Goog-FieldMask":"routes.distanceMeters,routes.duration"},body:JSON.stringify({origin:{address:origin},destination:{address:destination},travelMode:"DRIVE",routingPreference:"TRAFFIC_UNAWARE"})});const j=await r.json();if(!r.ok||!j.routes?.[0]?.distanceMeters)throw new Error(j.error?.message||"Unable to calculate route");return j.routes[0].distanceMeters/1609.344}
+async function quoteAddress(req,env){const b=await req.json(),airport=String(b.airport||"").toUpperCase(),airportAddress=AIRPORT_ADDRESSES[airport];if(!airportAddress||!b.address)return json({error:"address and supported airport are required"},400);const oneWay=await routeMiles(env,b.direction==="arrival"?airportAddress:b.address,b.direction==="arrival"?b.address:airportAddress);const deadheadFactor=Number(env.DEADHEAD_FACTOR||1.55),rate=Number(env.RATE_PER_BILLABLE_MILE||1.65),minimum=Number(env.MIN_BASE_FARE||70),billableMiles=oneWay*deadheadFactor,baseFare=round5(Math.max(minimum,billableMiles*rate));return json({success:true,baseFare,miles:Number(billableMiles.toFixed(2)),routeMiles:Number(oneWay.toFixed(2)),city:b.city||"",pricing:{deadheadFactor,rate,minimum}})}
+function responseText(j){if(typeof j.output_text==="string")return j.output_text;for(const item of j.output||[]){for(const c of item.content||[]){if(typeof c.text==="string")return c.text}}return""}
+const tripSchema={type:"object",additionalProperties:false,properties:{reply:{type:"string"},trip:{type:"object",additionalProperties:false,properties:{direction:{type:["string","null"],enum:["arrival","departure",null]},airport:{type:["string","null"]},date:{type:["string","null"]},time:{type:["string","null"]},city:{type:["string","null"]},address:{type:["string","null"]},airline:{type:["string","null"]},flightNumber:{type:["string","null"]},international:{type:["boolean","null"]},passengers:{type:["integer","null"]},luggage:{type:["integer","null"]},carSeats:{type:["integer","null"]},boosters:{type:["integer","null"]},holdSign:{type:["boolean","null"]},notes:{type:["string","null"]}},required:["direction","airport","date","time","city","address","airline","flightNumber","international","passengers","luggage","carSeats","boosters","holdSign","notes"]},missing:{type:"array",items:{type:"string"}},readyForSummary:{type:"boolean"}},required:["reply","trip","missing","readyForSummary"]};
+async function aiTrip(req,env){if(!env.OPENAI_API_KEY)return json({error:"OPENAI_API_KEY is not configured"},503);const b=await req.json();const system=`You are an airport ride intake assistant for Southern California. Your job is ONLY to understand trip details and ask for missing information. NEVER calculate, estimate, discuss, or invent a price. Preserve existing trip fields unless the user clearly changes them. Resolve relative dates using localDate=${b.localDate||""} in timezone ${b.timeZone||"America/Los_Angeles"}. Normalize airport codes to LAX, ONT, SNA, LGB, or BUR when possible. Normalize common Southern California city names to standard English names (e.g. 钻石吧 -> Diamond Bar, 奇诺岗 -> Chino Hills, 尔湾 -> Irvine). Infer arrival if the user says a flight lands/arrives at an airport; infer departure if they say they are going to an airport. Flight numbers like BR16, CI8, JX2 are international unless context says otherwise. Domestic US airline prefixes include AA, DL, UA, WN, B6, AS, NK, F9, HA. Required before summary: direction, airport, date, time, city, passengers. If something required is missing, ask ONE concise natural question, preferably the most important missing field. If all required fields are present, reply that the trip is ready for confirmation. Use the user's language.`;const input=[{role:"system",content:system},{role:"user",content:"Existing trip JSON:\n"+JSON.stringify(b.trip||{})+"\n\nLatest customer message:\n"+String(b.message||"")}];const r=await fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{"Authorization":"Bearer "+env.OPENAI_API_KEY,"Content-Type":"application/json"},body:JSON.stringify({model:env.OPENAI_TEXT_MODEL||"gpt-5.6-luna",store:false,input,text:{format:{type:"json_schema",name:"airport_trip_intake",strict:true,schema:tripSchema}}})});const j=await r.json();if(!r.ok)return json({error:j.error?.message||"OpenAI request failed"},502);const text=responseText(j);try{return json(JSON.parse(text))}catch{return json({error:"AI returned invalid structured data"},502)}}
+async function transcribe(req,env){if(!env.OPENAI_API_KEY)return json({error:"OPENAI_API_KEY is not configured"},503);const incoming=await req.formData(),file=incoming.get("file");if(!(file instanceof File))return json({error:"audio file is required"},400);const fd=new FormData();fd.append("file",file,file.name||"voice.webm");fd.append("model",env.OPENAI_TRANSCRIBE_MODEL||"gpt-4o-mini-transcribe");const r=await fetch("https://api.openai.com/v1/audio/transcriptions",{method:"POST",headers:{"Authorization":"Bearer "+env.OPENAI_API_KEY},body:fd});const j=await r.json();if(!r.ok)return json({error:j.error?.message||"transcription failed"},502);return json({text:j.text||""})}
+async function createBooking(req,env){const b=await req.json();if(!b.id||!b.name||!b.phone||!b.airport||!b.date)return json({error:"missing required booking fields"},400);if(env.BOOKINGS_DB){await env.BOOKINGS_DB.prepare("INSERT OR REPLACE INTO bookings (id, created_at, status, name, phone, airport, trip_date, payload) VALUES (?, ?, ?, ?, ?, ?, ?, ?)").bind(b.id,b.createdAt||new Date().toISOString(),b.status||"Pending confirmation",b.name,b.phone,b.airport,b.date,JSON.stringify(b)).run()}return json({success:true,id:b.id,databaseSaved:!!env.BOOKINGS_DB})}
+async function getBooking(url,env){if(!env.BOOKINGS_DB)return json({error:"database not configured"},503);const id=url.pathname.split("/").pop(),row=await env.BOOKINGS_DB.prepare("SELECT * FROM bookings WHERE id=?").bind(id).first();return row?json({success:true,booking:{...row,payload:JSON.parse(row.payload)}}):json({error:"not found"},404)}
+export default{async fetch(req,env){if(req.method==="OPTIONS")return new Response(null,{status:204,headers:corsHeaders});const url=new URL(req.url);try{if(url.pathname==="/api/ai-trip"&&req.method==="POST")return await aiTrip(req,env);if(url.pathname==="/api/transcribe"&&req.method==="POST")return await transcribe(req,env);if(url.pathname==="/api/address-quote"&&req.method==="POST")return await quoteAddress(req,env);if(url.pathname==="/api/bookings"&&req.method==="POST")return await createBooking(req,env);if(url.pathname.startsWith("/api/bookings/")&&req.method==="GET")return await getBooking(url,env);if(url.pathname==="/health")return json({ok:true,ai:!!env.OPENAI_API_KEY,maps:!!env.GOOGLE_MAPS_API_KEY,db:!!env.BOOKINGS_DB});return json({error:"not found"},404)}catch(e){return json({error:e.message||"server error"},500)}}};
