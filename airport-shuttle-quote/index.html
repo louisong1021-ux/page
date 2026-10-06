@@ -3,156 +3,130 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-  <meta name="theme-color" content="#f8f5ef">
-  <title>LA Airport Ride | 南加州机场接送即时报价</title>
-  <meta name="description" content="南加州机场接送在线报价与预约演示。支持 LAX、ONT、SNA、LGB、BUR，城市固定价、航班信息、乘客和附加服务。">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>AI Airport Ride Assistant | LA Airport Ride</title>
+  <meta name="description" content="用文字或语音描述机场接送需求，AI 帮你整理行程；确认信息后再获得报价。">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="./">
-        <span class="brand-mark">✈</span>
-        <span><strong>LA Airport Ride</strong><small data-i18n="brandSub">南加州机场接送 · 门到门专车</small></span>
-      </a>
-      <div class="top-actions">
-        <a class="orders-link" href="./account.html" data-i18n="manageBookings">管理订单</a>
-        <button class="contact-btn" id="contactTop" data-i18n="contactUs">联系我们</button>
-        <div class="lang-switch" aria-label="Language">
-          <button data-lang="en">EN</button>
-          <button data-lang="zh-hans" class="active">简</button>
-          <button data-lang="zh-hant">繁</button>
-        </div>
-      </div>
+    <a class="brand" href="./">
+      <span class="logo">✈</span>
+      <span><b>LA Airport Ride</b><small>AI Airport Ride Assistant</small></span>
+    </a>
+    <div class="toplinks">
+      <span class="status-pill"><i></i> AI Assistant</span>
+      <a href="./account.html">我的预约</a>
     </div>
   </header>
 
   <main class="page">
     <section class="hero">
       <div>
-        <p class="eyebrow" data-i18n="eyebrow">Southern California Airport Transportation</p>
-        <h1 data-i18n="pageTitle">机场接送在线报价</h1>
-        <p data-i18n="pageLead">LAX · ONT · SNA · LGB · BUR。填写行程即可看到实时估价并提交预约。</p>
+        <p class="eyebrow">AI AIRPORT RIDE ASSISTANT</p>
+        <h1>说一句话，<br>我来帮你整理行程。</h1>
+        <p>可以打字，也可以直接说。信息不完整没关系，我会只问缺少的内容。<strong>确认行程以后才会报价。</strong></p>
       </div>
-      <div class="trust-strip">
-        <span>✓ <b data-i18n="doorToDoor">门到门</b></span>
-        <span>✓ <b data-i18n="chineseService">中文服务</b></span>
-        <span>✓ <b data-i18n="privateRide">专车接送</b></span>
+      <div class="flow">
+        <span class="done">1 <b>描述需求</b></span><em>→</em>
+        <span>2 <b>确认行程</b></span><em>→</em>
+        <span>3 <b>获取报价</b></span>
       </div>
     </section>
 
-    <div class="layout">
-      <form id="bookingForm" class="form-stack" novalidate>
-        <section class="panel section-card">
-          <div class="segmented" role="tablist">
-            <button type="button" id="departureBtn" class="active"><span>↗</span><b data-i18n="departure">送机 Departure</b></button>
-            <button type="button" id="arrivalBtn"><span>↘</span><b data-i18n="arrival">接机 Arrival</b></button>
+    <div class="workspace">
+      <section class="chat-card">
+        <div class="chat-head">
+          <div class="assistant-avatar">AI</div>
+          <div><b>机场接送助手</b><small id="assistantStatus">可以用中文或英文告诉我行程</small></div>
+          <button id="resetChat" class="ghost">重新开始</button>
+        </div>
+
+        <div id="messages" class="messages">
+          <div class="message assistant">
+            <div class="bubble">
+              <p>你好 👋 直接告诉我你的机场接送需求就可以。</p>
+              <p class="muted">例如：“明天晚上长荣到 LAX，送 Chino Hills，3个人，2个箱子，需要一个儿童座椅。”</p>
+            </div>
           </div>
+        </div>
+
+        <div id="quickPrompts" class="quick-prompts">
+          <button>明天早上 6 点 Chino Hills 去 LAX，两个人</button>
+          <button>周五晚上 LAX 接机，送 Diamond Bar</button>
+          <button>ONT 接机，3个人，2个大箱子</button>
+        </div>
+
+        <div id="voiceState" class="voice-state hidden">
+          <span class="pulse"></span>
+          <b>正在录音</b>
+          <span id="recordTime">00:00</span>
+          <button id="stopRecording">停止并识别</button>
+        </div>
+
+        <div class="composer">
+          <textarea id="messageInput" rows="1" placeholder="告诉我您的机场、日期、时间、地址、人数……"></textarea>
+          <button id="micBtn" class="mic" aria-label="语音输入">🎙</button>
+          <button id="sendBtn" class="send" aria-label="发送">↑</button>
+        </div>
+        <div class="composer-note">🎙️ 语音会先转成文字，你可以确认或继续修改。</div>
+      </section>
+
+      <aside class="side">
+        <section class="panel trip-panel">
+          <div class="panel-title"><span>当前行程</span><b id="tripProgress">0%</b></div>
+          <div id="tripFields" class="trip-fields"></div>
+          <div id="missingBox" class="missing-box">先告诉我您的接送需求。</div>
         </section>
 
-        <section class="panel section-card">
-          <div class="section-head"><span class="section-icon">1</span><div><h2 data-i18n="tripDetails">行程信息</h2><p data-i18n="tripHint">选择机场并填写上车或送达地址</p></div></div>
-          <div class="field-grid two">
-            <label><span data-i18n="airport">机场</span><select id="airport" required></select></label>
-            <label><span data-i18n="serviceCity">城市 / 区域</span><select id="city" required></select></label>
+        <section id="summaryCard" class="panel summary-card hidden">
+          <p class="eyebrow">TRIP SUMMARY</p>
+          <h2>请确认您的行程</h2>
+          <div id="summaryRows" class="summary-rows"></div>
+          <div class="summary-actions">
+            <button id="confirmTrip" class="primary">✓ 信息正确，获取报价</button>
+            <button id="modifyTrip" class="secondary">继续修改</button>
           </div>
-          <label class="field full"><span data-i18n="address">详细地址</span><input id="address" autocomplete="street-address" placeholder="123 Main St, Chino Hills, CA 91709"><small id="addressStatus" data-i18n="addressHint">已收录城市按固定区域价；连接后端后可对未收录地址自动计算距离报价。</small></label>
-          <div class="field-grid two">
-            <label><span data-i18n="date">日期</span><input id="date" type="date" required></label>
-            <label><span id="timeLabel" data-i18n="pickupTime">上车时间</span><input id="time" type="time" value="10:00" required></label>
-          </div>
+          <p class="fine">只有确认以后系统才会计算价格。</p>
         </section>
 
-        <section class="panel section-card">
-          <div class="section-head"><span class="section-icon">2</span><div><h2 data-i18n="flightDetails">航班信息</h2><p data-i18n="flightHint">用于接机安排和深夜费用判断</p></div></div>
-          <div class="field-grid two">
-            <label><span data-i18n="airline">航空公司</span><input id="airline" list="airlines" placeholder="EVA Air / UA / BR"><datalist id="airlines"></datalist></label>
-            <label><span data-i18n="flightNumber">航班号</span><input id="flightNumber" placeholder="BR16 / CI8 / UA123"></label>
-          </div>
-          <div class="choice-row">
-            <button type="button" class="chip active" id="domesticChip" data-i18n="domestic">国内航班</button>
-            <button type="button" class="chip" id="internationalChip" data-i18n="international">国际航班</button>
-          </div>
-        </section>
-
-        <section class="panel section-card">
-          <div class="section-head"><span class="section-icon">3</span><div><h2 data-i18n="passengers">乘客与行李</h2><p data-i18n="passengersHint">最多 7 位乘客</p></div></div>
-          <div class="counter-grid">
-            <div class="counter-box"><span data-i18n="passengerCount">乘客人数</span><div class="counter"><button type="button" data-counter="passengers" data-delta="-1">−</button><b id="passengersVal">1</b><button type="button" data-counter="passengers" data-delta="1">+</button></div></div>
-            <div class="counter-box"><span data-i18n="luggageCount">大件行李</span><div class="counter"><button type="button" data-counter="luggage" data-delta="-1">−</button><b id="luggageVal">0</b><button type="button" data-counter="luggage" data-delta="1">+</button></div></div>
-            <div class="counter-box"><span data-i18n="carSeat">儿童安全座椅</span><div class="counter"><button type="button" data-counter="carSeats" data-delta="-1">−</button><b id="carSeatsVal">0</b><button type="button" data-counter="carSeats" data-delta="1">+</button></div></div>
-            <div class="counter-box"><span>Booster</span><div class="counter"><button type="button" data-counter="boosters" data-delta="-1">−</button><b id="boostersVal">0</b><button type="button" data-counter="boosters" data-delta="1">+</button></div></div>
-          </div>
-        </section>
-
-        <section class="panel section-card">
-          <div class="section-head"><span class="section-icon">4</span><div><h2 data-i18n="addOns">附加服务</h2><p data-i18n="addOnsHint">按需选择</p></div></div>
-          <div class="addon-grid">
-            <button type="button" class="addon" id="holdSign"><span>🪧</span><b data-i18n="holdSign">举牌接机</b><small>+$20</small></button>
-            <button type="button" class="addon" id="returnTrip"><span>↩</span><b data-i18n="returnTrip">需要返程</b><small data-i18n="quoteSeparately">另行报价</small></button>
-          </div>
-          <label class="field full hidden" id="holdSignNameWrap"><span data-i18n="signName">举牌姓名</span><input id="holdSignName" placeholder="Name on sign"></label>
-          <label class="field full"><span data-i18n="notes">备注</span><textarea id="notes" rows="3" placeholder="特殊行李、儿童、航班或接送要求"></textarea></label>
-        </section>
-
-        <section class="panel section-card" id="contactSection">
-          <div class="section-head"><span class="section-icon">5</span><div><h2 data-i18n="contactInfo">联系信息</h2><p data-i18n="contactHint">用于确认预约和司机联系</p></div></div>
-          <div class="field-grid two">
-            <label><span data-i18n="name">姓名 *</span><input id="name" autocomplete="name" required></label>
-            <label><span data-i18n="phone">电话 *</span><input id="phone" type="tel" autocomplete="tel" required></label>
-            <label><span>Email</span><input id="email" type="email" autocomplete="email"></label>
-            <label><span>WeChat</span><input id="wechat"></label>
-            <label><span>LINE</span><input id="line"></label>
-            <label><span data-i18n="promoCode">优惠码</span><div class="promo-wrap"><input id="promoCode" placeholder="Promo code"><button type="button" id="applyPromo" data-i18n="apply">应用</button></div></label>
-          </div>
-          <div id="promoMessage" class="form-message"></div>
-        </section>
-
-        <section class="panel section-card terms-card">
-          <label class="terms"><input id="agree" type="checkbox" required><span data-i18n="terms">我确认以上行程信息无误，并同意提交预约请求。最终服务以人工确认结果为准。</span></label>
-          <button class="submit-main" type="submit" id="submitBooking"><span data-i18n="confirmBooking">确认预约</span><b id="submitPrice">$0</b></button>
-        </section>
-      </form>
-
-      <aside class="quote-col">
-        <section class="panel quote-panel">
-          <div class="quote-top"><div><span data-i18n="instantQuote">即时估价</span><h2 id="total">$0</h2></div><span class="quote-status" id="quoteStatus" data-i18n="live">实时</span></div>
-          <p class="route" id="route">—</p>
-          <div class="quote-lines" id="breakdown"></div>
-          <div class="quote-actions">
-            <button type="button" id="copyQuote" data-i18n="copyQuote">复制报价</button>
-            <a href="./account.html" data-i18n="manageBookings">管理订单</a>
-          </div>
-          <p class="fineprint" data-i18n="estimateNote">在线显示为预估价格；未收录地址、多站点、包车及特殊需求需人工确认。</p>
-        </section>
-
-        <section class="panel mini-info">
-          <h3 data-i18n="serviceAirports">服务机场</h3>
-          <div class="airport-tags"><span>LAX</span><span>ONT</span><span>SNA</span><span>LGB</span><span>BUR</span></div>
-          <h3 data-i18n="serviceFeatures">服务特点</h3>
-          <ul><li data-i18n="feature1">门到门专车</li><li data-i18n="feature2">航班延误信息可备注</li><li data-i18n="feature3">儿童座椅 / Booster</li><li data-i18n="feature4">中文沟通</li></ul>
+        <section id="quoteCard" class="panel quote-card hidden">
+          <p class="eyebrow">ESTIMATED FARE</p>
+          <div class="quote-price" id="quoteTotal">$0</div>
+          <div id="quoteRoute" class="quote-route"></div>
+          <div id="quoteBreakdown" class="quote-breakdown"></div>
+          <button id="bookNow" class="primary">确认预约</button>
+          <button id="changeAfterQuote" class="secondary">修改行程并重新报价</button>
+          <p class="fine">价格基于当前已确认信息；特殊路线或未收录地址可能需要人工确认。</p>
         </section>
       </aside>
     </div>
+
+    <section id="contactCard" class="panel contact-card hidden">
+      <div>
+        <p class="eyebrow">FINAL STEP</p>
+        <h2>留下联系方式完成预约</h2>
+        <p>司机或客服将使用这些信息确认行程。</p>
+      </div>
+      <form id="contactForm">
+        <label>姓名<input id="name" required autocomplete="name"></label>
+        <label>电话<input id="phone" required type="tel" autocomplete="tel"></label>
+        <label>微信（可选）<input id="wechat"></label>
+        <label>Email（可选）<input id="email" type="email" autocomplete="email"></label>
+        <button class="primary" type="submit">提交预约</button>
+      </form>
+    </section>
   </main>
 
-  <div class="mobile-quote">
-    <div><span data-i18n="estimatedTotal">预计总价</span><b id="mobileTotal">$0</b></div>
-    <button id="mobileContinue" data-i18n="continue">继续预约</button>
-  </div>
-
-  <dialog id="confirmDialog">
-    <div class="dialog-card">
-      <button class="dialog-x" id="closeDialog">×</button>
-      <p class="eyebrow" data-i18n="confirmTitle">确认预约信息</p>
-      <h2 id="dialogPrice">$0</h2>
-      <div id="dialogSummary" class="dialog-summary"></div>
-      <button class="submit-main" id="finalSubmit" type="button" data-i18n="submitRequest">提交预约请求</button>
-      <button class="dialog-secondary" id="backEdit" type="button" data-i18n="backEdit">返回修改</button>
+  <dialog id="audioPermissionDialog">
+    <div class="dialog-box">
+      <h3>需要麦克风权限</h3>
+      <p>请允许浏览器访问麦克风。录音只用于把您的接送需求转成文字。</p>
+      <button id="closeAudioDialog" class="primary">知道了</button>
     </div>
   </dialog>
 
-  <div class="toast" id="toast">Copied</div>
+  <div id="toast" class="toast"></div>
   <script src="./app.js"></script>
 </body>
 </html>
