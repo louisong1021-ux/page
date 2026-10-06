@@ -1,41 +1,60 @@
-# LA Airport Ride — Airport Shuttle Quote
+# LA Airport Ride — AI Quote Flow
 
-这是一个独立的机场接送在线报价与预约前端，放在 `page/airport-shuttle-quote/`。
-
-## 已实现
-- 接机 / 送机
-- LAX / ONT / SNA / LGB / BUR
-- 大量南加州城市固定价表
-- 详细地址输入与后端地址报价接口挂钩
-- 日期、上车/航班到达时间
-- Airline / Flight Number
-- 根据航班号前缀辅助判断国内/国际航班
-- 早班、深夜接机附加费
-- 乘客、行李、Car Seat、Booster
-- 举牌接机、返程需求、备注
-- 姓名、电话、Email、微信、LINE
-- 优惠码入口（演示码 WELCOME10）
-- 实时报价拆分
-- EN / 简 / 繁三语言主要界面
-- 手机底部固定报价栏
-- 确认预约弹窗
-- 预约编号、确认页
-- 本机订单管理（localStorage）
-
-## 当前后端状态
-GitHub Pages 本身只有静态前端。页面已预留 `window.SHUTTLE_API_BASE`，设置后会调用：
-- `POST /api/address-quote`
-
-如果不设置后端，页面会使用城市固定价，不会报错。
-
-正式上线还建议增加：
-- Google Routes / Places 或其他地图服务
-- 服务端 API Key
-- D1 / PostgreSQL / Supabase 等订单数据库
-- 短信 / Email / 微信通知
-- 正式优惠码
-- 管理后台
-- Stripe / Square 等付款流程
-
-## 公开地址
+公开页面：
 https://louisong1021-ux.github.io/page/airport-shuttle-quote/
+
+## 新流程
+1. 客户用文字或语音描述接送需求
+2. AI 把自然语言整理成结构化 Trip JSON
+3. 信息缺失时 AI 只追问缺少的字段
+4. 信息完整后生成 Trip Summary
+5. 客户点击“信息正确，获取报价”
+6. 确定性 Quote Engine 才开始计算价格
+7. 客户确认预约并提交联系方式
+
+**AI 不负责决定价格。** AI 只负责理解、整理、追问和总结；价格仍由城市固定价 / 路线距离 / 时间费 / 人数费 / 儿童座椅等确定性规则计算。
+
+## 前端
+- index.html：AI 对话式页面
+- app.js：聊天状态、语音录制、Trip JSON、总结确认、报价引擎、预约
+- styles.css：桌面和手机 UI
+- confirmation.html：预约确认
+- account.html：本机预约记录
+
+如果后端未部署，文字仍有基础本地解析兜底；真正 AI 理解和语音转写需要 Worker。
+
+## Worker API
+- POST /api/ai-trip
+- POST /api/transcribe
+- POST /api/address-quote
+- POST /api/bookings
+- GET /api/bookings/:id
+- GET /health
+
+## OpenAI
+Worker 使用 OpenAI Responses API 做结构化行程解析，使用音频 transcription API 把录音转为文字。API Key 只放 Worker secret，不放 GitHub Pages 前端。
+
+需要配置：
+```bash
+wrangler secret put OPENAI_API_KEY
+wrangler secret put GOOGLE_MAPS_API_KEY
+```
+
+默认：
+- OPENAI_TEXT_MODEL = gpt-5.6-luna
+- OPENAI_TRANSCRIBE_MODEL = gpt-4o-mini-transcribe
+
+OpenAI 官方文档当前支持 Responses API 的 JSON Schema structured outputs，以及 /v1/audio/transcriptions 的文件转写。
+
+## Cloudflare D1
+创建 D1 后替换 backend/wrangler.jsonc 中的 database_id，并执行 backend/schema.sql。
+
+## 前端连接 Worker
+Worker 部署完成后，在 app.js 加载前设置：
+```html
+<script>
+window.SHUTTLE_API_BASE = "https://YOUR-WORKER.workers.dev";
+</script>
+```
+
+也可以临时在浏览器 localStorage 设置 shuttle-api-base 用于测试。
