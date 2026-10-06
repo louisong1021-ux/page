@@ -1,0 +1,17 @@
+{
+  "name": "la-airport-ride-api",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "vars": {
+    "DEADHEAD_FACTOR": "1.55",
+    "RATE_PER_BILLABLE_MILE": "1.65",
+    "MIN_BASE_FARE": "70"
+  },
+  "d1_databases": [
+    {
+      "binding": "BOOKINGS_DB",
+      "database_name": "la-airport-ride-bookings",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ]
+}
