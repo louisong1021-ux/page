@@ -3,6 +3,8 @@
   "main": "worker.js",
   "compatibility_date": "2026-10-01",
   "vars": {
+    "OPENAI_TEXT_MODEL": "gpt-5.6-luna",
+    "OPENAI_TRANSCRIBE_MODEL": "gpt-4o-mini-transcribe",
     "DEADHEAD_FACTOR": "1.55",
     "RATE_PER_BILLABLE_MILE": "1.65",
     "MIN_BASE_FARE": "70"
