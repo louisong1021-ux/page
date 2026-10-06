@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Private MCP 新机安装</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:780px;margin:48px auto;padding:0 20px;background:#f6f7f9;color:#111}
+.card{background:#fff;border:1px solid #ddd;border-radius:16px;padding:24px;box-shadow:0 4px 18px #0000000d}
+h1{font-size:24px;margin:0 0 10px}p{line-height:1.6;color:#444}
+textarea{width:100%;min-height:180px;box-sizing:border-box;border:1px solid #ccc;border-radius:10px;padding:12px;font:14px Consolas,monospace;resize:vertical}
+button{margin-top:14px;width:100%;padding:14px;border:0;border-radius:10px;background:#111;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.ok{color:#087a30;font-weight:700}.bad{color:#b42318;font-weight:700}
+.small{font-size:13px;color:#666}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Private MCP 新电脑 Direct 安装</h1>
+<p id="status">正在读取一次性安装票据…</p>
+<textarea id="cmd" readonly></textarea>
+<button id="copy">复制 PowerShell 命令</button>
+<p class="small">打开 PowerShell，粘贴后按 Enter。若出现 UAC，点击“是”。安装票据只放在 URL 的 # 片段里，不写入此 GitHub 仓库。</p>
+</div>
+<script>
+const ticket = decodeURIComponent(location.hash.slice(1).trim());
+const status = document.getElementById('status');
+const box = document.getElementById('cmd');
+const btn = document.getElementById('copy');
+if (!/^[A-Za-z0-9_-]{32,256}$/.test(ticket)) {
+  status.textContent = '链接里没有有效的一次性安装票据。';
+  status.className = 'bad';
+  box.value = '';
+  btn.disabled = true;
+} else {
+  const ps = 'powershell -NoProfile -ExecutionPolicy Bypass -Command "$p=Join-Path $env:TEMP \'private-mcp-direct.ps1\'; Invoke-WebRequest -UseBasicParsing \'https://windows-task-mcp.louisong1021.workers.dev/bootstrap-direct.ps1\' -OutFile $p; & $p -Origin \'https://windows-task-mcp.louisong1021.workers.dev\' -Ticket \'' + ticket + '\'"';
+  box.value = ps;
+  status.textContent = '命令已生成。点击下面按钮复制。';
+  status.className = 'ok';
+  btn.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(ps);
+      btn.textContent = '已复制';
+      setTimeout(()=>btn.textContent='复制 PowerShell 命令',1500);
+    } catch {
+      box.focus(); box.select(); document.execCommand('copy');
+      btn.textContent = '已复制';
+    }
+  };
+}
+</script>
+</body>
+</html>
