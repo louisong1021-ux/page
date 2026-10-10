@@ -27,6 +27,7 @@
 | YIAN Service 工业服务网站 | 工厂搬迁、设备安装维修、仓库及自动化服务 | `https://louisong1021-ux.github.io/page/yianservice/` |
 | YIAN Flow｜颐安智流 | 企业流程自动化、AI 集成、订单/客户/数据工作流自动化 | `https://louisong1021-ux.github.io/page/yian-flow/` |
 | 快递站自动化系统报价 | 多仓库扫码、PDF识别、摄像头识别及 UPS 自动录入方案 | `https://louisong1021-ux.github.io/page/courier-automation-quote/` |
+| Kali USB 安装命令页 | 在 SwiftiGo 上复制本地 PowerShell 账号配置命令（不含密码） | `https://louisong1021-ux.github.io/page/kali-setup/` |
 | 迁移记录与检查点 | 仓库整理记录，不是正式网页工具 | `https://github.com/louisong1021-ux/page/tree/main/move-checkpoint` |
 | 仓库首页 | 查看项目说明和源码结构 | `https://github.com/louisong1021-ux/page` |
 
