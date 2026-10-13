@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>Nova Agent · SWIFTYGO 部署命令</title>
+<style>
+:root{font-family:Inter,"Segoe UI","Microsoft YaHei",system-ui,sans-serif;color:#152132;background:#f4f6f9}*{box-sizing:border-box}body{margin:0}header{background:#152536;color:#fff;padding:36px 20px 28px}main{max-width:960px;margin:0 auto;padding:0 18px 70px}.wrap{max-width:960px;margin:auto}.eyebrow{font-size:13px;font-weight:750;letter-spacing:.03em;color:#486e92;text-transform:uppercase}header .eyebrow{color:#8ec5fa}h1{font-size:clamp(27px,4vw,41px);margin:8px 0}header p{line-height:1.7;color:#c7d4e2;max-width:700px}.pill{display:inline-block;padding:8px 12px;background:#263d53;border-radius:999px;font-size:13px;margin-top:8px}.alert{padding:17px 20px;border-radius:12px;background:#fff7e7;border:1px solid #edcf9e;color:#6b4b16;margin:22px 0 14px;line-height:1.8}.card{margin-top:20px;padding:23px;border-radius:15px;background:#fff;box-shadow:0 2px 16px #14263a0b;border:1px solid #e4e9ef}.heading{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}h2{font-size:20px;margin:10px 0}.card p{color:#536478;font-size:14px;line-height:1.75;margin:4px 0 15px}.copy{border:none;border-radius:9px;background:#0a66c2;color:white;cursor:pointer;font-size:14px;font-weight:700;padding:10px 15px}.copy:hover{background:#084b94}.copy:focus-visible{outline:3px solid #85beff}pre{margin:0;background:#142132;border-radius:10px;color:#e5f4ff;overflow-x:auto;padding:17px;line-height:1.65;font-size:13px}code{white-space:pre}footer{color:#637386;font-size:13px;margin-top:26px;line-height:1.8}a{color:#0e65b0}footer a{text-decoration:underline}@media(max-width:520px){header{padding-top:27px}.card{padding:17px}pre{font-size:12px}}@media(prefers-color-scheme:dark){:root{background:#101720;color:#eaf0f6}.card{background:#192636;border-color:#2e3b4a}.card p,footer{color:#b0c0d0}.alert{background:#342b17;border-color:#775d2d;color:#ffe4aa}a{color:#83bdfb}}
+</style></head>
+<body><header><div class="wrap"><div class="eyebrow">Nova MCP / Windows boot agent</div><h1>SWIFTYGO 部署命令</h1><p>在笔记本电脑打开本页，逐段点击“复制命令”，粘贴到 PowerShell。当前只建议执行第一项检查；其余命令须等待正式更新包发布。</p><div class="pill">公开命令参考页 · 不包含密码、Token 或设备密钥</div></div></header>
+<main><div class="alert"><strong>重要：</strong>本页针对 <strong>SWIFTYGO 笔记本</strong>，不是 XPS 台式机。日志轮转功能仍在 <a href="https://github.com/louisong1021-ux/Nova-MCP/pull/5">Nova-MCP PR #5</a> 审查中，尚无正式更新包或发布用 SHA-256。<strong>目前不要执行 Verify / Apply / Accept。</strong></div>
+<section class="card" id="s0"><div class="eyebrow">01 · 现在可以执行</div><div class="heading"><h2>检查 SWIFTYGO 当前状态</h2><button class="copy" data-copy="c0" aria-label="复制检查 SWIFTYGO 当前状态">复制命令</button></div><p>只读操作。建议先在笔记本的 PowerShell 运行，确认自己打开的是正确电脑。</p><pre><code id="c0">$root = &quot;C:\ProgramData\NovaAgent-BootPilot&quot;
+Write-Host &quot;当前电脑: $env:COMPUTERNAME&quot;
+Write-Host &quot;更新程序存在: &quot; (Test-Path &quot;$root\private\Update-PyAgentBoot.ps1&quot;)
+Write-Host &quot;正式更新包存在: &quot; (Test-Path &quot;$root\incoming\nova-boot-logging.zip&quot;)
+Get-ScheduledTask -TaskName &quot;Nova-Windows-Agent-Boot&quot; |
+  Select-Object TaskName, State
+Get-ScheduledTask -TaskName &quot;Nova-WSL-Kali-KeepAlive&quot; |
+  Select-Object TaskName, State</code></pre></section>
+<section class="card" id="s1"><div class="eyebrow">02 · 正式包发布后</div><div class="heading"><h2>验证更新包（Verify）</h2><button class="copy" data-copy="c1" aria-label="复制验证更新包（Verify）">复制命令</button></div><p>需要 GitHub PR #5 审查通过、正式 ZIP 已放进 incoming，并且取得发布公告提供的独立 SHA-256。</p><pre><code id="c1">$ErrorActionPreference = &quot;Stop&quot;
+if ($env:COMPUTERNAME -ne &quot;SWIFTYGO&quot;) {
+  throw &quot;这组命令只用于 SWIFTYGO 笔记本，请勿在 XPS 上执行。&quot;
+}
+$root = &quot;C:\ProgramData\NovaAgent-BootPilot&quot;
+$tool = &quot;$root\private\Update-PyAgentBoot.ps1&quot;
+$zip = &quot;$root\incoming\nova-boot-logging.zip&quot;
+$sha = &quot;请粘贴正式发布公告中的64位SHA256&quot;
+if (-not (Test-Path -LiteralPath $tool)) { throw &quot;更新程序不存在&quot; }
+if (-not (Test-Path -LiteralPath $zip)) { throw &quot;正式更新包还未发布，停止操作&quot; }
+if ($sha -notmatch '^[0-9a-fA-F]{64}$') { throw &quot;请先填写真实 SHA256&quot; }
+if ((Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash -ne $sha) {
+  throw &quot;更新包与发布时的 SHA256 不一致&quot;
+}
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File $tool -Action Verify -InstallRoot $root -BundleFile $zip -BundleSha256 $sha
+if ($LASTEXITCODE -ne 0) { throw &quot;校验失败，禁止更新&quot; }</code></pre></section>
+<section class="card" id="s2"><div class="eyebrow">03 · 正式包发布后</div><div class="heading"><h2>应用更新（Apply）</h2><button class="copy" data-copy="c2" aria-label="复制应用更新（Apply）">复制命令</button></div><p>会短暂停止 Nova Windows Agent，并保留回退版本。通过 Verify 才能执行。</p><pre><code id="c2">$ErrorActionPreference = &quot;Stop&quot;
+if ($env:COMPUTERNAME -ne &quot;SWIFTYGO&quot;) {
+  throw &quot;这组命令只用于 SWIFTYGO 笔记本，请勿在 XPS 上执行。&quot;
+}
+$root = &quot;C:\ProgramData\NovaAgent-BootPilot&quot;
+$tool = &quot;$root\private\Update-PyAgentBoot.ps1&quot;
+$zip = &quot;$root\incoming\nova-boot-logging.zip&quot;
+$sha = &quot;请粘贴正式发布公告中的64位SHA256&quot;
+if (-not (Test-Path -LiteralPath $tool)) { throw &quot;更新程序不存在&quot; }
+if (-not (Test-Path -LiteralPath $zip)) { throw &quot;正式更新包还未发布，停止操作&quot; }
+if ($sha -notmatch '^[0-9a-fA-F]{64}$') { throw &quot;请先填写真实 SHA256&quot; }
+if ((Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash -ne $sha) {
+  throw &quot;更新包与发布时的 SHA256 不一致&quot;
+}
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File $tool -Action Verify -InstallRoot $root -BundleFile $zip -BundleSha256 $sha
+if ($LASTEXITCODE -ne 0) { throw &quot;校验失败，禁止更新&quot; }
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File $tool -Action Apply -InstallRoot $root -BundleFile $zip -BundleSha256 $sha -Confirmed
+if ($LASTEXITCODE -ne 0) { throw &quot;更新失败，请检查并回滚&quot; }</code></pre></section>
+<section class="card" id="s3"><div class="eyebrow">04 · 远程验收通过后</div><div class="heading"><h2>确认更新（Accept）</h2><button class="copy" data-copy="c3" aria-label="复制确认更新（Accept）">复制命令</button></div><p>必须先通过 Nova MCP 在 SWIFTYGO-BOOT 上实际执行 Windows 命令，再确认。</p><pre><code id="c3">$ErrorActionPreference = &quot;Stop&quot;
+if ($env:COMPUTERNAME -ne &quot;SWIFTYGO&quot;) { throw &quot;只允许在 SWIFTYGO 上执行&quot; }
+$root = &quot;C:\ProgramData\NovaAgent-BootPilot&quot;
+$tool = &quot;$root\private\Update-PyAgentBoot.ps1&quot;
+# 先从 ChatGPT 的 Nova MCP 对 SWIFTYGO-BOOT 执行实际命令，确认新版本正常。
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File $tool -Action Accept -InstallRoot $root -Confirmed</code></pre></section>
+<section class="card" id="s4"><div class="eyebrow">05 · 如验收失败</div><div class="heading"><h2>恢复原版（Rollback）</h2><button class="copy" data-copy="c4" aria-label="复制恢复原版（Rollback）">复制命令</button></div><p>更新后有异常时使用。它会恢复更新程序保存的旧版本。</p><pre><code id="c4">$ErrorActionPreference = &quot;Stop&quot;
+if ($env:COMPUTERNAME -ne &quot;SWIFTYGO&quot;) { throw &quot;只允许在 SWIFTYGO 上执行&quot; }
+$root = &quot;C:\ProgramData\NovaAgent-BootPilot&quot;
+$tool = &quot;$root\private\Update-PyAgentBoot.ps1&quot;
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File $tool -Action Rollback -InstallRoot $root -Confirmed</code></pre></section>
+<footer>本页面只是命令参考，不会自行执行 PowerShell，不会修改 Agent。更新前请保存发布包的独立 SHA-256，并保持 Origin MCP 不受影响。<p><a href="https://github.com/louisong1021-ux/Nova-MCP/pull/5">查看 PR #5 状态</a> · <a href="https://github.com/louisong1021-ux/page">GitHub Pages 源码</a></p></footer></main>
+<script>
+for(const b of document.querySelectorAll(".copy")){
+ b.addEventListener("click",async()=>{
+  const code=document.getElementById(b.dataset.copy).innerText;
+  const old=b.textContent;
+  try{await navigator.clipboard.writeText(code);b.textContent="已复制 ✓";}
+  catch(e){b.textContent="复制失败，请手动选择";}
+  window.setTimeout(()=>{b.textContent=old;},1800);
+ });
+}
+</script>
+</body></html>
